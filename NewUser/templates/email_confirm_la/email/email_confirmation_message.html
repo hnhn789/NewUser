@@ -1,4 +1,4 @@
-<p>Your registered email is {{ email_confirmation.email }}, click the link below to confirm:</p>
+<p>親愛同學您好！您註冊的信箱為{{ email_confirmation.email }}, 點擊下面連結認證：</p>
 
 {% with confirmation_url=email_confirmation.get_confirmation_url %}
 <p><a href="{{ confirmation_url }}">{{ confirmation_url }}</a></p>

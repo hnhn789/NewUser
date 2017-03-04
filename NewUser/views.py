@@ -13,31 +13,37 @@ from email_confirm_la.models import EmailConfirmation
 class SignUpView(APIView):
     def post(self,request):
         if request.user.is_authenticated():
-            return Response('all ready autheticated')
+            return Response('已登入')
 
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
         email = request.POST.get('email', '')
 
+        if User.objects.filter(username=username).exists():
+            return Response('此使用者名稱已註冊過')
+
+        if User.objects.filter(email=email).exists():
+            return Response('此信箱已被註冊過')
+
         user = User.objects.create_user(username,email,password)
 
-        EmailConfirmation.objects.verify_email_for_object(email, user)
+        # EmailConfirmation.objects.verify_email_for_object(email, user)
 
         if user is not None and user.is_active:
             auth.login(request, user)
-            return Response('Logged In')
+            return Response('認證信已寄出！')
         else:
-            return Response('Not Logged In')
+            return Response('未登入')
 
 
 class LoginView(APIView):
 
     def get(self, request):
-        return Response('Try Log In')
+        return Response('嘗試登入中')
 
     def post(self,request):
         if request.user.is_authenticated():
-            return Response('all ready autheticated')
+            return Response('已經登入')
 
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
@@ -46,14 +52,14 @@ class LoginView(APIView):
 
         if user is not None and user.is_active:
             auth.login(request, user)
-            return Response('Logged In')
+            return Response('登入成功！')
         else:
-            return Response('Not Logged In')
+            return Response('使用者名稱或密碼有誤')
 
 class LogoutView(View):
     def get(self, request):
         auth.logout(request)
-        return HttpResponse("logged out", status=200)
+        return HttpResponse("登出成功！", status=200)
 
 
 

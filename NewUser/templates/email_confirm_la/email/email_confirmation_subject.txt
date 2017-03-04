@@ -1,1 +1,1 @@
-Email confirmation for {{ email_confirmation.email }}
+{{ email_confirmation.email }}的信箱認證

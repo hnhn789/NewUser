@@ -30,14 +30,16 @@ ALLOWED_HOSTS = ['hnhn789.pythonanywhere.com','127.0.0.1']
 
 # Application definition
 EMAIL_USE_TLS = True
-MAIL_HOST = "smtp.gmail.com"
+EMAIL_USE_SSL = False
+EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
+SERVER_EMAIL = 'hnhn789@gmail.com'
 EMAIL_HOST_USER = "hnhn789@gmail.com"
 EMAIL_HOST_PASSWORD = 'Hnhn123456'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 EMAIL_CONFIRM_LA_HTTP_PROTOCOL = 'https'
-EMAIL_CONFIRM_LA_DOMAIN = '127.0.0.1:8000'
+EMAIL_CONFIRM_LA_DOMAIN = 'hnhn789.pythonanywhere.com'
 EMAIL_CONFIRM_LA_AUTOLOGIN = True
 EMAIL_CONFIRM_LA_TEMPLATE_CONTEXT = {
     'THE_ANSWER': 42,
