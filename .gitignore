@@ -3,3 +3,4 @@ node_modules/
 _build/
 KivyApp/
 site_media/
+db.sqlite3
