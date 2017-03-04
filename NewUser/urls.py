@@ -20,5 +20,6 @@ from .views import SignUpView
 urlpatterns = [
     url(r'^email_confirmation/', include('email_confirm_la.urls', namespace='email_confirm_la')),
     url(r'^admin/', admin.site.urls),
+    url(r'^', admin.site.urls),
     url(r'^accounts/signup/', SignUpView.as_view()),
 ]
