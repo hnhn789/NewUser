@@ -1,0 +1,1 @@
+Email confirmation for {{ email_confirmation.email }}

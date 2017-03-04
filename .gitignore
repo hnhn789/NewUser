@@ -1,0 +1,5 @@
+*.pyc
+node_modules/
+_build/
+KivyApp/
+site_media/
