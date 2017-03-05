@@ -1,15 +1,12 @@
 from django.contrib.auth.models import User
-
+from django.db import models
+from django.conf import settings
 from django.dispatch import receiver
 from email_confirm_la.signals import post_email_confirmation_confirm
 
 
 
+class UserProfile(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,related_name='user_profile')
+    confirmed = models.BooleanField(default=False)
 
-@receiver(post_email_confirmation_confirm)
-def post_email_confirmation_confirm_callback(sender, confirmation, **kwargs):
-    model_instace = confirmation.content_object
-    email = confirmation.email
-    old_email = kwargs['old_email']
-
-    # do_your_stuff()
