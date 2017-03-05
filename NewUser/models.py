@@ -8,5 +8,6 @@ from email_confirm_la.signals import post_email_confirmation_confirm
 
 class UserProfile(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,related_name='user_profile')
-    confirmed = models.BooleanField(default=False)
+    usable_points = models.IntegerField(default=0)
+
 
