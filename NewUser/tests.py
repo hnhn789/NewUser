@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.core import mail
 from email_confirm_la.models import EmailConfirmation
 from django.db import IntegrityError
+from .models import UserProfile
 
 
 class AccountTests(TransactionTestCase):
@@ -165,7 +166,8 @@ class EmailConfirmationTest(TransactionTestCase):
                                      {"username": "b04202048", "password": "hnhn123456", })
         self.assertEqual(response.status_code, 200)
 
-        self.assertIsNotNone(user.user_profile)
+        userprofile = UserProfile.objects.get(user=user)
+        self.assertIsNotNone(userprofile)
 
         response2 = self.client.post("/accounts/login/",
                                     {"username": "b04202048", "password": "hnhn123456", })

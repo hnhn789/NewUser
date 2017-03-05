@@ -107,6 +107,10 @@ class LoginView(APIView):
                 return Response({"message": '信箱尚未認證', 'success': False}, status=402)
 
             auth.login(request, user)
+            try:
+                UserProfile.objects.create(user=user)
+            except IntegrityError:
+                pass
             return Response({"message":'登入成功','success':True,'user':user.username}, status=200)
         else:
             return Response({"message": '使用者名稱或密碼有誤', 'success': False}, status=400)
