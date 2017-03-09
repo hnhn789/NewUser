@@ -26,17 +26,17 @@ SECRET_KEY = '+cf@46==biuvk3_k=vaz-p=s99zk=!-g-*sq%3+v8sqaqemox2'
 DEBUG = True
 
 ALLOWED_HOSTS = ['hnhn789.pythonanywhere.com','127.0.0.1','testserver']
-# EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
 
 # Application definition
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587
-SERVER_EMAIL = 'hnhn789@gmail.com'
-EMAIL_HOST_USER = "hnhn789@gmail.com"
-EMAIL_HOST_PASSWORD = 'hnhN123456'
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+# EMAIL_USE_TLS = True
+# EMAIL_USE_SSL = False
+# EMAIL_HOST = "smtp.gmail.com"
+# EMAIL_PORT = 587
+# SERVER_EMAIL = 'hnhn789@gmail.com'
+# EMAIL_HOST_USER = "hnhn789@gmail.com"
+# EMAIL_HOST_PASSWORD = 'hnhN123456'
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 EMAIL_CONFIRM_LA_HTTP_PROTOCOL = 'https'
 EMAIL_CONFIRM_LA_DOMAIN = 'hnhn789.pythonanywhere.com'
@@ -46,6 +46,7 @@ EMAIL_CONFIRM_LA_TEMPLATE_CONTEXT = {
 }
 
 INSTALLED_APPS = [
+    'accounts',
     'NewUser',
     'email_confirm_la',
     'django.contrib.admin',

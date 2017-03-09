@@ -15,15 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from .views import SignUpView, LogoutView, LoginView, ResendView, ChangePasseordView
+from NewUser.views import BuyItem, QRCode
 
 urlpatterns = [
-    url(r'^email_confirmation/', include('email_confirm_la.urls', namespace='email_confirm_la')),
-    url(r'^email_confirmation/resend/(?P<username>\w+)/', ResendView.as_view()),
     url(r'^admin/', admin.site.urls),
     url(r'^', admin.site.urls),
-    url(r'^accounts/signup/', SignUpView.as_view()),
-    url(r'^accounts/login/', LoginView.as_view()),
-    url(r'^accounts/logout/', LogoutView.as_view()),
-    url(r'^accounts/changepassword/', ChangePasseordView.as_view()),
+    url(r'^accounts/',include('accounts.urls')),
+    url(r"^shop/(?P<username>[-\w]+)/(?P<item_id>\d+)/$", BuyItem.as_view()),
+    url(r"^QRcode/(?P<username>[-\w]+)/(?P<qrcode>[-\w]+)/$", QRCode.as_view()),
+
 ]

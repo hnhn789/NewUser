@@ -1,130 +1,94 @@
-from django.contrib import auth  # 別忘了import auth
+
+from random import randint
 from django.contrib.auth.models import User
-from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponse
-from django.shortcuts import render_to_response
-from  django.views.generic.base import View
-from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.response import Response
 from rest_framework import status
-from .models import UserProfile
-from django.db import IntegrityError
-
-from email_confirm_la.models import EmailConfirmation
-
-class ChangePasseordView(APIView):
-    def post(self, request):
-
-        oldpassword = request.POST.get('oldpassword', '')
-        newpassword = request.POST.get('newpassword', '')
-
-        if request.session.has_key('username'):
-            user = User.objects.get(username=request.session['username'])
-        else:
-            return Response({"message": '請先重新登入', 'success': False}, status=400)
-
-        if user is not None:
-
-            if not user.check_password(oldpassword):
-                return Response({"message": '原本密碼錯誤', 'success': False}, status=401)
-            user.set_password(newpassword)
-            user.save()
-
-            return Response({"message": '重設成功', 'success': True}, status=200)
+from django.http import HttpResponse
+import pytz
+import datetime
+from NewUser.models import ItemList, BoughtItems, QRCodeRecord, QRcodeStatus, QRcodeList, BoughtRecord
+from accounts.models import UserProfile
 
 
-class ResendView(APIView):
-    def get(self, request, username):
-        email = username + '@ntu.edu.tw'
-        try:
-            user = User.objects.get(username=username)
-        except ObjectDoesNotExist:
-            return Response({"message": '請先註冊此信箱', 'success': False}, status=407)
-
-        EmailConfirmation.objects.verify_email_for_object(email, user)
-        return Response({"message": '認證信已寄出！請確認！', 'success': True}, status=200)
-
-
-class SignUpView(APIView):
-    def post(self,request):
-        if request.user.is_authenticated():
-            auth.logout(request)
-
-        if request.session.has_key('username'):
-            del request.session['username']
-
-        username = request.POST.get('username', '')
-        password = request.POST.get('password', '')
-        realname = request.POST.get('realname', '')
-        department = request.POST.get('department', '')
-        email = username +'@ntu.edu.tw'
-
-        if username == '' or password == '' or realname == '' or department=='':
-            return Response({"message": '註冊資料不完全', 'success': False}, status=401)
-
-        if User.objects.filter(username=username).exists():
-            return Response({"message": '此信箱已被註冊過', 'success': False}, status=400)
-
-        user = User.objects.create_user(username=username,password=password, first_name = department,last_name = realname)
-
-        EmailConfirmation.objects.verify_email_for_object(email, user)
-
-        if user is not None and user.is_active:
-            return Response({"message":'認證信已寄出！請確認！','success':True}, status=200)
-        else:
-            return Response({"message": '註冊失敗', 'success': False}, status=400)
-
-
-class LoginView(APIView):
-
-    def get(self, request):
-        if request.session.has_key('username'):
-            user = User.objects.get(username=request.session['username'])
-
-            if user is not None:
-                if user.email == '':
-                    return Response({"message": '信箱尚未認證', 'success': False}, status=402)
-                auth.login(request, user)
-                try:
-                    UserProfile.objects.create(user = user)
-                except IntegrityError:
-                    pass
-                return Response({"message":'已登入','success':True}, status=200)
+class BuyItem(APIView):
+    def get(self, request, username, item_id):
+        if (ItemList.objects.filter(pk=item_id).exists()):
+            if (User.objects.filter(username=username).exists()):
+                item = ItemList.objects.get(pk=item_id)
+                if item.remain >= 1:
+                    self.update_item(item_id)
+                    time = self.save_to_user(username, item_id)
+                    return Response({'messages':'購買成功','success':True, 'time': time},status=status.HTTP_200_OK)  ##TODO proper response
+                else:
+                    return Response({'messages':'此項目已售完','success':False})  # return Response(status=status.HTTP_409_CONFLICT) #TODO proper response
             else:
-                return Response({"message": '請登入', 'success': False}, status=400)
+                return Response({'messages':'使用者不存在','success':False})
         else:
-            return Response({"message": '未登入', 'success': False}, status=406)
+            return Response({'messages':'購買物品不存在','success':False},status=401)
 
-    def post(self,request):
-        username = request.POST.get('username', '')
-        password = request.POST.get('password', '')
 
-        user = auth.authenticate(username=username, password=password)
+    def update_item(self, item_id):
+        item = ItemList.objects.get(pk=item_id)
+        item.remain -= 1
+        item.save()
 
-        if user is not None and user.is_active:
-            request.session['username'] = username
-            if user.email == '':
-                return Response({"message": '信箱尚未認證', 'success': False}, status=402)
 
-            auth.login(request, user)
-            try:
-                UserProfile.objects.create(user=user)
-            except IntegrityError:
-                pass
-            return Response({"message":'登入成功','success':True,'user':user.username}, status=200)
+    def save_to_user(self, username, item_id):
+        user = User.objects.get(username=username)
+        buyer = UserProfile.objects.get(user=user)
+
+        boughtitem = BoughtItems.objects.filter(item_name=item_id)
+
+        if boughtitem.filter(user=user).exists():
+            bought_item_record = boughtitem.get(user=user)
         else:
-            return Response({"message": '使用者名稱或密碼有誤', 'success': False}, status=400)
+            bought_item_record = BoughtItems(item_name=item_id, user=user)
 
-class LogoutView(View):
-    def get(self, request):
-        try:
-            del request.session['username']
-        except:
-            pass
-        auth.logout(request)
-        return HttpResponse("登出成功！", status=200)
+        bought_item_record.item_quantity += 1
+        bought_item_record.save()
+        a = BoughtRecord(user=user, item_name=item_id)
+        a.save()
+        item = ItemList.objects.get(pk=item_id)
+        buyer.usable_points -= item.price
+        buyer.save()
+        return a.bought_time
 
 
+class QRCode(APIView):
 
-def index(request):
-    return render_to_response('index.html',locals())
+    def get(self, request, username, qrcode):
+        if (QRcodeList.objects.filter(code_content=qrcode).exists()):
+            QRcode_status_data_list = self.got_correct_code(username, qrcode)
+
+            if QRcode_status_data_list.filter(code=qrcode).exists():
+                QRcode_status_data = QRcode_status_data_list.get(code=qrcode)
+                logic = 0
+            else:
+                user = User.objects.get(username=username)
+                QRcode_status_data = QRcodeStatus(code=qrcode, user=user)
+                logic = 1
+
+            old_time = QRcode_status_data.last_read
+            now = datetime.datetime.now(pytz.utc)
+            time_delta = now - old_time
+            if ((time_delta.seconds >= 5) or logic):  # TODO QRcode cold down set here
+                QRcode_status_data.last_read = now
+                QRcode_status_data.save()
+                point_recieved = randint(10, 50)  # point range set here
+                user = User.objects.get(username=username)
+                userprofile = UserProfile.objects.get(user=user)
+                userprofile.usable_points += point_recieved
+                userprofile.save()
+                a = QRCodeRecord(code_content=qrcode, points_got=point_recieved, user=user)
+                a.save()
+                return Response({'messages':'成功得到點數！','success':True,'point_received':str(point_recieved),'time':now}, status=200)  # TODO proper response
+            else:
+                return Response({'messages':'此QRcode還不能使用','time':time_delta,'success':False},status=400)
+        else:
+            return Response({'messages':'QRcode不存在','success':False},status=401)  #TODO proper response
+
+    def got_correct_code(self, username, qrcode):
+        user = User.objects.get(username=username)
+        QRcode_check_slug_list = QRcodeStatus.objects.filter(user=user)
+        return QRcode_check_slug_list

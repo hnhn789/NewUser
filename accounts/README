@@ -1,0 +1,7 @@
+#####  Account utilities for Physics Night App   ######
+
+
+1.  Find out the TODOs to enable all the 'UserProfiles' if you need extra fields. Files include 'views',
+'models' and 'admin'.
+
+2.  Check out the account_README to see the available urls.

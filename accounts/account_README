@@ -1,0 +1,148 @@
+
+#######  User Account Mangement for  Kivy APP   ######
+
+
+Lists of urls:
+
+
+1.  Signup :  http://hnhn789.pythonanywhere.com/accounts/signup/
+
+    POST Method ONLY
+
+    #######  Example Usage ########
+
+    POST:  requires username, password, realname, department
+
+        from kivy.network.urlrequest import UrlRequest
+        import urllib
+
+        params = urllib.parse.urlencode({'username': 'b04202048', 'password':'hnhn123456','realname':'郭郭','department':'物理二'})
+        headers = {'Content-type': 'application/x-www-form-urlencoded'}
+        req = UrlRequest('http://hnhn789.pythonanywhere.com/accounts/login/',
+                            on_success=self.success,
+                            on_failure=self.fail,
+                            req_body=params,
+                            req_headers=headers)
+        def success(self, reqest, results):
+            print(results['message'],results['success'])
+
+        def fail(self, reqest, results):
+            print(results['message'],results['success'])
+
+
+     ***** notes ******
+
+        1. If the registration failed, it will call the "on_failure" and show the error message in results['message'],
+            also the results['success'] will show 'False'
+
+        2. Error messages include  '註冊資料不完全' , '此信箱已被註冊過',  '註冊失敗，請重試'
+           Success message includes '認證信已寄出！請確認！'
+
+
+
+
+
+
+
+
+2.  LogIn  :   http://hnhn789.pythonanywhere.com/accounts/login/
+
+    BOTH POST and GET
+
+    #######  Example Usage ########
+
+    GET:  It should be called everytime the user starts the app, it has the ability to check if a user
+            can be logged in automatically.
+
+
+        from kivy.network.urlrequest import UrlRequest
+        import urllib
+
+        req = UrlRequest('http://hnhn789.pythonanywhere.com/accounts/login/',
+                            on_success=self.success,
+                            on_failure=self.fail)
+        def success(self, reqest, results):
+            print(results['message'],results['success'])
+
+
+     ***** notes ******
+
+      1. Error messages include: '信箱尚未認證', '請登入', '未登入'
+         Success messages include: '已登入'
+
+
+     POST:   Requires username and password
+
+
+        from kivy.network.urlrequest import UrlRequest
+        import urllib
+
+        params = urllib.parse.urlencode({'username': 'b04202048', 'password':'hnhn123456'})
+        headers = {'Content-type': 'application/x-www-form-urlencoded'}
+        req = UrlRequest('http://hnhn789.pythonanywhere.com/accounts/login/',
+                            on_success=self.success,
+                            on_failure=self.fail,
+                            req_body=params,
+                            req_headers=headers)
+        def success(self, reqest, results):
+            print(results['message'],results['success'])
+
+
+
+        ***** notes ******
+
+      1. Error messages include: '信箱尚未認證', '使用者名稱或密碼有誤'
+         Success messages include: '登入成功'
+
+
+
+3. LogOut  :    http://hnhn789.pythonanywhere.com/accounts/logout/
+
+    GET Method ONLY
+
+            req = UrlRequest('http://hnhn789.pythonanywhere.com/accounts/logout/',
+                            on_success=self.success,
+                            on_failure=self.fail)
+
+
+4. Resend Confirmation Email  :   http://hnhn789.pythonanywhere.com/accounts/email_confirmation/resend/b04202048/
+
+    GET Method ONLY  :  Resend confirmation email
+
+      req = UrlRequest(
+          'http://hnhn789.pythonanywhere.com/accounts/email_confirmation/resend/b04202048/',
+          # 'http://127.0.0.1:8000/accounts/login/',
+          on_success=self.success, on_failure=self.fail)
+
+
+       ***** notes ******
+
+     1. Please change b04202048 to current username
+     2. Error messaage: '請先註冊此信箱'
+        Success message: '認證信已寄出！請確認！'
+
+
+5. Change Password  :   http://hnhn789.pythonanywhere.com/accounts/changepassword/
+
+     POST ONLY
+
+     POST:   Requires newpassword and oldpassword
+
+
+        from kivy.network.urlrequest import UrlRequest
+        import urllib
+
+        params = urllib.parse.urlencode({'oldpassword': 'xxxxxxxx', 'newpassword':'aaaaaaaa'})
+        headers = {'Content-type': 'application/x-www-form-urlencoded'}
+        req = UrlRequest('http://hnhn789.pythonanywhere.com/accounts/changepassword/',
+                            on_success=self.success,
+                            on_failure=self.fail,
+                            req_body=params,
+                            req_headers=headers)
+        def success(self, reqest, results):
+            print(results['message'],results['success'])
+
+         ***** notes ******
+
+         1. Error messages '請先重新登入', '原本密碼錯誤', '重設成功'
+            Success meesage '重設成功'
