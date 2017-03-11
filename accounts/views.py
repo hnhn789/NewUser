@@ -76,6 +76,8 @@ class SignUpView(APIView):
 
 
 class LoginView(APIView):
+    def dump_data(self):
+        return
 
     def get(self, request):
         if request.session.has_key('username'):
@@ -90,6 +92,7 @@ class LoginView(APIView):
                 except ObjectDoesNotExist:
                     ProfileUser = UserProfile.objects.create(user=user)
                 points = ProfileUser.usable_points
+                self.dump_data()
                 return Response({"messages":'已登入','success':True, 'points':points}, status=200)
             else:
                 return Response({"messages": '請登入', 'success': False}, status=200)
@@ -113,6 +116,7 @@ class LoginView(APIView):
             except ObjectDoesNotExist:
                 ProfileUser = UserProfile.objects.create(user=user)
             points = ProfileUser.usable_points
+            self.dump_data()
             return Response({"messages":'登入成功','success':True,'user':user.username,'points':points}, status=200)
         else:
             return Response({"messages": '使用者名稱或密碼有誤', 'success': False}, status=200)
