@@ -11,6 +11,9 @@
 
 REMEMBER FOR MYSELF
 
+env EDITOR=nano crontab -e
+
+
 MAILTO=""
 */5 * * * * source /Users/hanson/.bashrc && source /Users/hanson/PycharmProjects/MyUser_venv/bin/activate && python /Users/hanson/PycharmProjects/NewUser/manage.py runcrons > /Users/hanson/PycharmProjects/NewUser/NewUser/crontab.log
 

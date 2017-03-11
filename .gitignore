@@ -3,6 +3,6 @@ node_modules/
 _build/
 site_media/
 db.sqlite3
-
+backups/
 NewUser/migrations/
 accounts/migrations/

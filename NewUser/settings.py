@@ -46,10 +46,8 @@ EMAIL_CONFIRM_LA_TEMPLATE_CONTEXT = {
 }
 
 
-DBBACKUP_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
-DBBACKUP_STORAGE_OPTIONS = {
-    'oauth2_access_token': 'whQArzQq-3QAAAAAAAAAFtsPtaKo19cunrXtKoyEhKXWH63mfl6bQyHHxoGGN8VJ',
-}
+DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
+DBBACKUP_STORAGE_OPTIONS = {'location': 'backups'}
 
 CRON_CLASSES = [
     "NewUser.cron.Backup",
