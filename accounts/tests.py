@@ -10,6 +10,8 @@ from accounts.models import UserProfile
 class AccountTests(TransactionTestCase):
 
 
+
+
     def test_missing_signup_data(self):
         response = self.client.post("/accounts/signup/",
                                     {"username": "b04202048", "password": "hnhn123456","department":"物理二" })
@@ -25,11 +27,11 @@ class AccountTests(TransactionTestCase):
 
     def test_session_works(self):
 
-        User.objects.create_user(username='hanson',password='hnhn123456',email='hnhn789@yahoo.com.tw')
+        User.objects.create_user(username='hanson2',password='hnhn123456',email='hnhn789@yahoo.com.tw')
         response = self.client.get('/accounts/login/')
         self.assertIn(str('未登入').encode(), response.content)
 
-        response =  self.client.post("/accounts/login/",{"username":"hanson","password":"hnhn123456"})
+        response =  self.client.post("/accounts/login/",{"username":"hanson2","password":"hnhn123456"})
         self.assertIn(str('登入成功').encode(), response.content)
 
         response = self.client.get('/accounts/login/')
@@ -44,8 +46,19 @@ class AccountTests(TransactionTestCase):
     def test_login_is_myself(self):
         User.objects.create_user(username='hanson', password='hnhn123456',email='hnhn789@yahoo.com.tw')
         response = self.client.post("/accounts/login/", {"username": "hanson", "password": "hnhn123456"})
-        self.assertContains(response,'hanson')
+        self.assertIn(str('hanson').encode(), response.content)
 
+    def test_return_current_points(self):
+        user= User.objects.create_user(username='hanson', password='hnhn123456', email='hnhn789@yahoo.com.tw')
+        response = self.client.post("/accounts/login/", {"username": "hanson", "password": "hnhn123456"})
+        userprofile = UserProfile.objects.get(user=user)
+        self.assertIsNotNone(userprofile)
+        userprofile.usable_points = 10
+        userprofile.save()
+        response = self.client.post("/accounts/login/", {"username": "hanson", "password": "hnhn123456"})
+
+        profile2 = UserProfile.objects.get(user = user)
+        self.assertEqual(profile2.usable_points,10)
 
     def test_signup_same_account(self):
         User.objects.create_user(username='hanson', password='hnhn123456',email="hnhn789@yahoo.com.tw")

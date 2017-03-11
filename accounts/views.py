@@ -86,10 +86,11 @@ class LoginView(APIView):
                     return Response({"message": '信箱尚未認證', 'success': False}, status=200)
                 auth.login(request, user)
                 try:
-                    UserProfile.objects.create(user = user)
-                except IntegrityError:
-                    pass
-                return Response({"message":'已登入','success':True}, status=200)
+                    ProfileUser = UserProfile.objects.get(user=user)
+                except ObjectDoesNotExist:
+                    ProfileUser = UserProfile.objects.create(user=user)
+                points = ProfileUser.usable_points
+                return Response({"message":'已登入','success':True, 'points':points}, status=200)
             else:
                 return Response({"message": '請登入', 'success': False}, status=200)
         else:
@@ -108,10 +109,11 @@ class LoginView(APIView):
 
             auth.login(request, user)
             try:
-                UserProfile.objects.create(user=user)
-            except IntegrityError:
-                pass
-            return Response({"message":'登入成功','success':True,'user':user.username}, status=200)
+                ProfileUser = UserProfile.objects.get(user=user)
+            except ObjectDoesNotExist:
+                ProfileUser = UserProfile.objects.create(user=user)
+            points = ProfileUser.usable_points
+            return Response({"message":'登入成功','success':True,'user':user.username,'points':points}, status=200)
         else:
             return Response({"message": '使用者名稱或密碼有誤', 'success': False}, status=200)
 
