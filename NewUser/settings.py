@@ -45,10 +45,22 @@ EMAIL_CONFIRM_LA_TEMPLATE_CONTEXT = {
     'THE_ANSWER': 42,
 }
 
+
+DBBACKUP_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
+DBBACKUP_STORAGE_OPTIONS = {
+    'oauth2_access_token': 'whQArzQq-3QAAAAAAAAAFtsPtaKo19cunrXtKoyEhKXWH63mfl6bQyHHxoGGN8VJ',
+}
+
+CRON_CLASSES = [
+    "NewUser.cron.Backup",
+]
+
 INSTALLED_APPS = [
     'accounts',
     'NewUser',
     'email_confirm_la',
+    'dbbackup',
+    "django_cron",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -8,6 +8,8 @@ from  django.views.generic.base import View
 from email_confirm_la.models import EmailConfirmation
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from NewUser.models import ItemList
+import json
 
 from accounts.models import UserProfile
 
@@ -77,7 +79,17 @@ class SignUpView(APIView):
 
 class LoginView(APIView):
     def dump_data(self):
-        return
+        name_list = {}
+        price_list = {}
+        remain_list = {}
+
+        for i in range(1, ItemList.objects.count()+1):
+            name_list[i] = ItemList.objects.get(pk=i).name
+            price_list[i] = ItemList.objects.get(pk=i).price
+            remain_list[i] = ItemList.objects.get(pk=i).remain
+
+        data = {"name": name_list, "price": price_list, "remain": remain_list}
+        return data
 
     def get(self, request):
         if request.session.has_key('username'):
@@ -92,8 +104,8 @@ class LoginView(APIView):
                 except ObjectDoesNotExist:
                     ProfileUser = UserProfile.objects.create(user=user)
                 points = ProfileUser.usable_points
-                self.dump_data()
-                return Response({"messages":'已登入','success':True, 'points':points}, status=200)
+                data =self.dump_data()
+                return Response({"data":json.dumps(data),"messages":'已登入','success':True, 'points':points}, status=200)
             else:
                 return Response({"messages": '請登入', 'success': False}, status=200)
         else:
@@ -116,8 +128,8 @@ class LoginView(APIView):
             except ObjectDoesNotExist:
                 ProfileUser = UserProfile.objects.create(user=user)
             points = ProfileUser.usable_points
-            self.dump_data()
-            return Response({"messages":'登入成功','success':True,'user':user.username,'points':points}, status=200)
+            data = self.dump_data()
+            return Response({"data":json.dumps(data),"messages":'登入成功','success':True,'user':user.username,'points':points}, status=200)
         else:
             return Response({"messages": '使用者名稱或密碼有誤', 'success': False}, status=200)
 

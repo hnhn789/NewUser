@@ -1,0 +1,18 @@
+
+1. install requirements.txt
+
+2. python manage.py migrate django_cron
+
+
+
+
+
+###################################
+
+REMEMBER FOR MYSELF
+
+MAILTO=""
+*/5 * * * * source /Users/hanson/.bashrc && source /Users/hanson/PycharmProjects/MyUser_venv/bin/activate && python /Users/hanson/PycharmProjects/NewUser/manage.py runcrons > /Users/hanson/PycharmProjects/NewUser/NewUser/crontab.log
+
+MAILTO=""
+*/5 * * * * source /home/hnhn789/newuser_env/bin/activate && python /home/hnhn789/NewUser/manage.py runcrons > /home/hnhn789/NewUser/NewUser/crontab.log

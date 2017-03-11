@@ -4,6 +4,7 @@ from django.db import IntegrityError
 from django.test import TransactionTestCase
 from email_confirm_la.models import EmailConfirmation
 
+from NewUser.models import ItemList
 from accounts.models import UserProfile
 
 
@@ -84,7 +85,13 @@ class AccountTests(TransactionTestCase):
         response4 = self.client.post("/accounts/login/", {"username": "hanson", "password": "hnhn123456"})
         self.assertIn(str('名稱或密碼有誤').encode(), response4.content)
 
-
+    def test_data_got(self):
+        item1 = ItemList.objects.create(name='apple', price=500000, remain=76)
+        item2 = ItemList.objects.create(name='pen', price=7200, remain=20)
+        user = User.objects.create_user(username='b04202048', password='hnhn123456', email="hnhn789@yahoo.com.tw")
+        response = self.client.post("/accounts/login/",
+                                    {"username": "b04202048", "password": "hnhn123456", })
+        print(response.content)
 
 
 class EmailConfirmationTest(TransactionTestCase):
@@ -189,4 +196,6 @@ class EmailConfirmationTest(TransactionTestCase):
 
         self.assertEqual(response2.status_code, 200)
         self.assertRaises(IntegrityError)
+
+
 
