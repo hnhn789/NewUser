@@ -25,7 +25,7 @@ class BuyItem(APIView):
             else:
                 return Response({'messages':'使用者不存在','success':False})
         else:
-            return Response({'messages':'購買物品不存在','success':False},status=401)
+            return Response({'messages':'購買物品不存在','success':False},status=200)
 
 
     def update_item(self, item_id):
@@ -84,9 +84,9 @@ class QRCode(APIView):
                 a.save()
                 return Response({'messages':'成功得到點數！','success':True,'point_received':str(point_recieved),'time':now}, status=200)  # TODO proper response
             else:
-                return Response({'messages':'此QRcode還不能使用','time':time_delta,'success':False},status=400)
+                return Response({'messages':'此QRcode還不能使用','time':time_delta,'success':False},status=200)
         else:
-            return Response({'messages':'QRcode不存在','success':False},status=401)  #TODO proper response
+            return Response({'messages':'QRcode不存在','success':False},status=200)  #TODO proper response
 
     def got_correct_code(self, username, qrcode):
         user = User.objects.get(username=username)

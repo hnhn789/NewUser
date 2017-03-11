@@ -4,3 +4,6 @@ _build/
 KivyApp/
 site_media/
 db.sqlite3
+
+NewUser/migrations/
+accounts/migrations/

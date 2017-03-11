@@ -13,33 +13,33 @@ class AccountTests(TransactionTestCase):
     def test_missing_signup_data(self):
         response = self.client.post("/accounts/signup/",
                                     {"username": "b04202048", "password": "hnhn123456","department":"物理二" })
-        self.assertEqual(response.status_code, 401)
+        self.assertIn(str('註冊資料不完全').encode(), response.content)
 
         response = self.client.post("/accounts/signup/",
                                     {"username": "b04202048", "password": "hnhn123456", "realname": "物理二"})
-        self.assertEqual(response.status_code, 401)
+        self.assertIn(str('註冊資料不完全').encode(), response.content)
 
         response = self.client.post("/accounts/signup/",
                                     {"username": "b04202048", "password": "hnhn123456", "realname": "物理二","department":"物理二" })
-        self.assertEqual(response.status_code, 200)
+        self.assertIn(str('認證信已寄出').encode(), response.content)
 
     def test_session_works(self):
 
         User.objects.create_user(username='hanson',password='hnhn123456',email='hnhn789@yahoo.com.tw')
         response = self.client.get('/accounts/login/')
-        self.assertEqual(response.status_code, 406)
+        self.assertIn(str('未登入').encode(), response.content)
 
         response =  self.client.post("/accounts/login/",{"username":"hanson","password":"hnhn123456"})
-        self.assertEqual(response.status_code, 200)
+        self.assertIn(str('登入成功').encode(), response.content)
 
         response = self.client.get('/accounts/login/')
-        self.assertEqual(response.status_code, 200)
+        self.assertIn(str('已登入').encode(), response.content)
 
         response = self.client.get('/accounts/logout/')
-        self.assertEqual(response.status_code, 200)
+        self.assertIn(str('登出成功').encode(), response.content)
 
         response = self.client.get('/accounts/login/')
-        self.assertEqual(response.status_code, 406)
+        self.assertIn(str('未登入').encode(),response.content)
 
     def test_login_is_myself(self):
         User.objects.create_user(username='hanson', password='hnhn123456',email='hnhn789@yahoo.com.tw')
@@ -50,7 +50,7 @@ class AccountTests(TransactionTestCase):
     def test_signup_same_account(self):
         User.objects.create_user(username='hanson', password='hnhn123456',email="hnhn789@yahoo.com.tw")
         response1 = self.client.post("/accounts/signup/", {"username": "hanson", "password": "hnhn123456",'realname':'郭郭','department':'物理二'})
-        self.assertEqual(response1.status_code, 400)
+        self.assertIn(str('已被註冊').encode(), response1.content)
 
 
 
@@ -59,7 +59,7 @@ class AccountTests(TransactionTestCase):
         user = User.objects.create_user(username='hanson', password='hnhn123456', email="hnhn789@yahoo.com.tw")
         response1 = self.client.post("/accounts/changepassword/",
                                      {"oldpassword": "hnhn123456", "newpassword": "hnhn1234567"})
-        self.assertEqual(response1.status_code, 400)
+        self.assertIn(str('請先重新登入').encode(), response1.content)
 
 
         response2 = self.client.post("/accounts/login/", {"username": "hanson", "password": "hnhn123456"})
@@ -69,7 +69,7 @@ class AccountTests(TransactionTestCase):
         self.assertEqual(response3.status_code, 200)
 
         response4 = self.client.post("/accounts/login/", {"username": "hanson", "password": "hnhn123456"})
-        self.assertEqual(response4.status_code, 400)
+        self.assertIn(str('名稱或密碼有誤').encode(), response4.content)
 
 
 
@@ -94,7 +94,7 @@ class EmailConfirmationTest(TransactionTestCase):
 
         response2 = self.client.post("/accounts/login/",
                                      {"username": "b04202048", "password": "hnhn123456", })
-        self.assertEqual(response2.status_code, 402)
+        self.assertIn(str('信箱尚未認證').encode(), response2.content)
 
 
         response3 = self.client.get("/accounts/email_confirmation/resend/b04202048/")
@@ -109,7 +109,7 @@ class EmailConfirmationTest(TransactionTestCase):
                                      "department": "物理二"})
         self.assertEqual(response.status_code, 200)
         response3 = self.client.get("/accounts/email_confirmation/resend/b04202049/")
-        self.assertEqual(response3.status_code, 407)
+        self.assertIn(str('請先註冊此信箱').encode(), response3.content)
 
 
     def test_confirmed_email(self):
@@ -144,10 +144,10 @@ class EmailConfirmationTest(TransactionTestCase):
 
         response2 = self.client.post("/accounts/login/",
                                    {"username": "b04202048", "password": "hnhn123456", })
-        self.assertEqual(response2.status_code, 402)
+        self.assertIn(str('信箱尚未認證').encode(), response2.content)
 
         response3 = self.client.get("/accounts/login/")
-        self.assertEqual(response3.status_code, 402)
+        self.assertIn(str('信箱尚未認證').encode(), response3.content)
 
         SentEmail = EmailConfirmation.objects.get(email=user_email)
         key = SentEmail.confirmation_key

@@ -41,7 +41,7 @@ class ShopTests(TransactionTestCase):
         self.assertEqual(e.item_quantity, 2)
 
         response3 = self.client.get('/shop/b04202048/4/')
-        self.assertEqual(response3.status_code, 401)
+        self.assertIn(str('物品不存在').encode(), response3.content)
         self.assertEqual(item_yes_final.remain, 9)
         self.assertEqual(response.status_code, 200)
 
@@ -52,7 +52,7 @@ class ShopTests(TransactionTestCase):
         b.save()
 
         response = self.client.get('/QRcode/b04202048/Physicszzz/')
-        self.assertEqual(response.status_code, 401)
+        self.assertIn(str('不存在').encode(), response.content)
 
         response = self.client.get('/QRcode/b04202048/Physics/')
         self.assertEqual(response.status_code, 200)
@@ -60,7 +60,7 @@ class ShopTests(TransactionTestCase):
         sleep(3)
 
         response2 = self.client.get('/QRcode/b04202048/Physics/')
-        self.assertEqual(response2.status_code, 400)
+        self.assertIn(str('還不能使用').encode(), response2.content)
 
         sleep(6)
 
