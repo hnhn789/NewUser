@@ -58,7 +58,6 @@ INSTALLED_APPS = [
     'NewUser',
     'email_confirm_la',
     'dbbackup',
-    "django_cron",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
