@@ -11,6 +11,8 @@ from time import sleep
 class ShopTests(TransactionTestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='b04202048', password='hnhn123456', email='hnhn789@yahoo.com.tw')
+        self.user2 = User.objects.create_user(username='b04202049', password='hnhn123456', email='hnh789@yahoo.com.tw')
+
 
     def test_buy(self):
 
@@ -45,6 +47,18 @@ class ShopTests(TransactionTestCase):
         self.assertEqual(item_yes_final.remain, 9)
         self.assertEqual(response.status_code, 200)
 
+    def test_two_user_using_same_qrcode(self):
+        a = QRcodeList.objects.create(code_content='Physics',is_poster=True)
+        b = QRcodeList.objects.create(code_content='Night', is_poster=False)
+        c = UserProfile.objects.create(user = self.user)
+        d = UserProfile.objects.create(user=self.user2)
+
+
+        response = self.client.get('/QRcode/b04202048/Physics/')
+        self.assertEqual(response.status_code, 200)
+
+        response2 = self.client.get('/QRcode/b04202049/Physics/')
+        self.assertEqual(response2.status_code, 200)
 
     def test_qrcode_cd(self):
         a = QRcodeList.objects.create(code_content='Physics')

@@ -27,7 +27,7 @@ class QRCodeRecord(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='qrcode_record')
 
 class QRcodeStatus(models.Model):
-    code = models.SlugField(max_length=40, unique=True)
+    code = models.SlugField(max_length=40)
     last_read = models.DateTimeField(default=datetime.datetime.now(pytz.utc), editable=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='qrcode_status')
 
