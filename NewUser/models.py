@@ -17,6 +17,7 @@ class BoughtItems(models.Model):
     item_quantity = models.IntegerField(default=0)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='bought_items')
 
+
 class QRCodeRecord(models.Model):
     code_content = models.CharField(max_length=40, unique=False)
     time = models.DateTimeField(auto_now_add=True, editable=False)
