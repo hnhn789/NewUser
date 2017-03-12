@@ -62,7 +62,7 @@ class TutorialApp(App):
 
     def success(self, request, results):
         print("success")
-        print(results)
+        print(results['boughtitems'] == [])
 
     def redirected(self, reqest, results):
         print("redirect")

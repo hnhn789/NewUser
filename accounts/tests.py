@@ -4,7 +4,7 @@ from django.db import IntegrityError
 from django.test import TransactionTestCase
 from email_confirm_la.models import EmailConfirmation
 
-from NewUser.models import ItemList
+from NewUser.models import ItemList, BoughtItems
 from accounts.models import UserProfile
 
 
@@ -191,7 +191,8 @@ class EmailConfirmationTest(TransactionTestCase):
                                     {"username": "b04202048", "password": "hnhn123456", })
 
         self.assertEqual(response2.status_code, 200)
-        self.assertRaises(IntegrityError)
+        with self.assertRaises(IntegrityError):
+            UserProfile.objects.create(user=user)
 
 
 class ReturnDataTest(TransactionTestCase):
@@ -217,9 +218,27 @@ class ReturnDataTest(TransactionTestCase):
         response = self.client.post("/accounts/logout/",
                                     {"username": "b04202048", "stories": "0101010", })
 
-
         userprofile = UserProfile.objects.get(user = user)
         self.assertEqual(userprofile.stories,'0101010')
+
+    def test_not_return_redeemed_item(self):
+        user = User.objects.create_user(username='b04202048', password='hnhn123456', email="hnhn789@yahoo.com.tw")
+        boughtitem = BoughtItems.objects.create(user=user,item_name=1,item_quantity=23,has_redeemed = False)
+        response = self.client.post("/accounts/login/",
+                                    {"username": "b04202048", "password": "hnhn123456", })
+        self.assertEqual(response.status_code, 200)
+
+        self.assertIn(str('23').encode(), response.content)
+
+        boughtitem.has_redeemed=True
+        boughtitem.save()
+
+        response2= self.client.post("/accounts/login/",
+                                    {"username": "b04202048", "password": "hnhn123456", })
+        self.assertEqual(response2.status_code, 200)
+        with self.assertRaises(AssertionError):
+            self.assertIn(str('23').encode(), response2.content)
+
 
 
 

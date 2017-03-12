@@ -16,6 +16,7 @@ class BoughtItems(models.Model):
     item_name = models.IntegerField(default=0)
     item_quantity = models.IntegerField(default=0)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='bought_items')
+    has_redeemed = models.BooleanField(default=False)
 
 
 class QRCodeRecord(models.Model):
