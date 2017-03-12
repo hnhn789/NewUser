@@ -8,7 +8,8 @@ from  django.views.generic.base import View
 from email_confirm_la.models import EmailConfirmation
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from NewUser.models import ItemList
+from NewUser.models import BoughtItems
+from NewUser.serializers import BoughtItemsSerializer
 import json
 
 from accounts.models import UserProfile
@@ -78,38 +79,30 @@ class SignUpView(APIView):
 
 
 class LoginView(APIView):
-    def dump_data(self):
-        name_list = {}
-        price_list = {}
-        remain_list = {}
+    # def dump_data(self):
+    #     name_list = {}
+    #     price_list = {}
+    #     remain_list = {}
+    #
+    #     for i in range(1, ItemList.objects.count()+1):
+    #         name_list[i] = ItemList.objects.get(pk=i).name
+    #         price_list[i] = ItemList.objects.get(pk=i).price
+    #         remain_list[i] = ItemList.objects.get(pk=i).remain
+    #
+    #     data = {"name": name_list, "price": price_list, "remain": remain_list}
+    #     return data
 
-        for i in range(1, ItemList.objects.count()+1):
-            name_list[i] = ItemList.objects.get(pk=i).name
-            price_list[i] = ItemList.objects.get(pk=i).price
-            remain_list[i] = ItemList.objects.get(pk=i).remain
+    def data_points_story_shop(self, user):
+        try:
+            ProfileUser = UserProfile.objects.get(user=user)
+        except ObjectDoesNotExist:
+            ProfileUser = UserProfile.objects.create(user=user)
+        points = ProfileUser.usable_points
+        stories = ProfileUser.stories
 
-        data = {"name": name_list, "price": price_list, "remain": remain_list}
-        return data
-
-    def get(self, request):
-        if request.session.has_key('username'):
-            user = User.objects.get(username=request.session['username'])
-
-            if user is not None:
-                if user.email == '':
-                    return Response({"messages": '信箱尚未認證', 'success': False}, status=200)
-                auth.login(request, user)
-                try:
-                    ProfileUser = UserProfile.objects.get(user=user)
-                except ObjectDoesNotExist:
-                    ProfileUser = UserProfile.objects.create(user=user)
-                points = ProfileUser.usable_points
-                data =self.dump_data()
-                return Response({"data":json.dumps(data),"messages":'已登入','success':True, 'points':points}, status=200)
-            else:
-                return Response({"messages": '請登入', 'success': False}, status=200)
-        else:
-            return Response({"messages": '未登入', 'success': False}, status=200)
+        boughtitems = BoughtItems.objects.filter(user = user)
+        serializer = BoughtItemsSerializer(boughtitems, many=True)
+        return points, stories, serializer.data
 
     def post(self,request):
         username = request.POST.get('username', '')
@@ -121,20 +114,22 @@ class LoginView(APIView):
             request.session['username'] = username
             if user.email == '':
                 return Response({"messages": '信箱尚未認證', 'success': False}, status=200)
-
             auth.login(request, user)
-            try:
-                ProfileUser = UserProfile.objects.get(user=user)
-            except ObjectDoesNotExist:
-                ProfileUser = UserProfile.objects.create(user=user)
-            points = ProfileUser.usable_points
-            data = self.dump_data()
-            return Response({"data":json.dumps(data),"messages":'登入成功','success':True,'user':user.username,'points':points}, status=200)
+
+            points, stories, boughtitems = self.data_points_story_shop(user)
+
+            return Response({'boughtitems': boughtitems,"messages": '登入成功', 'points':points,'stories':stories,'success': True,'username':username})
         else:
             return Response({"messages": '使用者名稱或密碼有誤', 'success': False}, status=200)
 
 class LogoutView(View):
-    def get(self, request):
+    def post(self, request):
+        username = request.POST.get('username', '')
+        stories = request.POST.get('stories', '')
+        user = User.objects.get(username = username)
+        userprofile = UserProfile.objects.get(user = user)
+        userprofile.stories = stories
+        userprofile.save()
         try:
             del request.session['username']
         except:

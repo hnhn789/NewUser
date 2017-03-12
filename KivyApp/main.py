@@ -31,7 +31,7 @@ class TutorialApp(App):
 
     def MyRequest(self):
         # req = UrlRequest(
-        #     'http://hnhn789.pythonanywhere.com/QRcode/superuser/PhysicsNigh/',
+        #     'http://127.0.0.1:8000/shop/update/',
         #
         #     on_success=self.success, on_failure=self.fail)
 
@@ -43,7 +43,7 @@ class TutorialApp(App):
 
         params = urllib.parse.urlencode({'username': 'hanson', 'password':'hnhn123456','realname':'郭郭','department':'物理二'})
         headers = {'Content-type': 'application/x-www-form-urlencoded'}
-        req = UrlRequest('http://hnhn789.pythonanywhere.com/accounts/login/', on_success=self.success, on_failure=self.fail,
+        req = UrlRequest('http://127.0.0.1:8000/accounts/login/', on_success=self.success, on_failure=self.fail,
                          req_body=params,
                          req_headers=headers)
 
@@ -55,8 +55,8 @@ class TutorialApp(App):
 
     def success(self, request, results):
         print("success")
-        data = results["data"]
-        print(data)
+        item = results['boughtitems'][0]
+        print(item['item_name'])
 
     def redirected(self, reqest, results):
         print("redirect")

@@ -9,6 +9,17 @@ import pytz
 import datetime
 from NewUser.models import ItemList, BoughtItems, QRCodeRecord, QRcodeStatus, QRcodeList, BoughtRecord
 from accounts.models import UserProfile
+from NewUser.serializers import ItemListSerializer
+
+
+class BuyUpdate(APIView):
+
+    def get(self, request):
+        itemlists = ItemList.objects.all()
+        serializer = ItemListSerializer(itemlists, many=True)
+        return Response(serializer.data)
+        # return Response({'messages': '購買物品不存在', 'success': False}, status=200)
+
 
 
 class BuyItem(APIView):

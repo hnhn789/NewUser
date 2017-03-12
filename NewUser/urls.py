@@ -15,13 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from NewUser.views import BuyItem, QRCode
+from NewUser.views import BuyItem, QRCode, BuyUpdate
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', admin.site.urls),
     url(r'^accounts/',include('accounts.urls')),
+    url(r"^shop/update/$", BuyUpdate.as_view()),
     url(r"^shop/(?P<username>[-\w]+)/(?P<item_id>\d+)/$", BuyItem.as_view()),
     url(r"^QRcode/(?P<username>[-\w]+)/(?P<qrcode>[-\w]+)/$", QRCode.as_view()),
-
 ]
