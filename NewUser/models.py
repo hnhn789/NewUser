@@ -8,6 +8,7 @@ class ItemList(models.Model):
     name = models.CharField(max_length=100,blank=True)
     price = models.IntegerField(default=0)
     remain = models.IntegerField(default=0)
+    image = models.CharField(max_length=200,default='https://firebasestorage.googleapis.com/v0/b/sibo-5e145.appspot.com/o/p_coin.png?alt=media&token=682579a3-23fa-4a96-a758-5bc07610a556')
 
     def __str__(self):
         return self.name

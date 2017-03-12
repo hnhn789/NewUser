@@ -10,4 +10,4 @@ class BoughtItemsSerializer(serializers.ModelSerializer):
 class ItemListSerializer(serializers.ModelSerializer):
     class Meta:
         model = ItemList
-        fields = ('pk', 'name','price','remain')
+        fields = ('pk', 'name','price','remain','image')

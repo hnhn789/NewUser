@@ -197,10 +197,10 @@ class EmailConfirmationTest(TransactionTestCase):
 
 class ReturnDataTest(TransactionTestCase):
     def test_update_shop_list(self):
-        item1 = ItemList.objects.create(name='apple', price=500000, remain=76)
+        item1 = ItemList.objects.create(name='apple', price=500000, remain=76, image = 'http://myimage.com')
         item2 = ItemList.objects.create(name='pen', price=7200, remain=20)
         response = self.client.get("/shop/update/")
-        self.assertIn(str('pen').encode(), response.content)
+        self.assertIn(str('myimage').encode(), response.content)
 
     def test_login_return_right_data(self):
         user = User.objects.create_user(username='b04202048', password='hnhn123456', email="hnhn789@yahoo.com.tw")
