@@ -3,12 +3,21 @@ from django.core import mail
 from django.db import IntegrityError
 from django.test import TransactionTestCase
 from email_confirm_la.models import EmailConfirmation
+from django.core.exceptions import ObjectDoesNotExist
 
 from NewUser.models import ItemList, BoughtItems
 from accounts.models import UserProfile
 
 
 class AccountTests(TransactionTestCase):
+
+    def test_dont_need_good_password(self):
+        response = self.client.post("/accounts/signup/",
+                                    {"username": "b04202048", "password": "34", "realname": "物理二",
+                                     "department": "物理二"})
+        user = User.objects.get(username = 'b04202048')
+        self.assertIsNotNone(user)
+
 
     def test_missing_signup_data(self):
         response = self.client.post("/accounts/signup/",
@@ -216,7 +225,7 @@ class ReturnDataTest(TransactionTestCase):
         self.assertEqual(response.status_code, 200)
 
         response = self.client.post("/accounts/logout/",
-                                    {"username": "b04202048", "stories": "0101010", })
+                                    {"username": "b04202048", "stories": "0101010","points":10 })
 
         userprofile = UserProfile.objects.get(user = user)
         self.assertEqual(userprofile.stories,'0101010')

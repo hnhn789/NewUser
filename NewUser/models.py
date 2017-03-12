@@ -33,6 +33,7 @@ class QRcodeStatus(models.Model):
 
 class QRcodeList(models.Model):
     code_content = models.SlugField(max_length=40, unique=True)
+    is_poster = models.BooleanField(default=False)
 
     def __str__(self):
         return self.code_content

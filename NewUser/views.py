@@ -25,12 +25,17 @@ class BuyUpdate(APIView):
 class BuyItem(APIView):
     def get(self, request, username, item_id):
         if (ItemList.objects.filter(pk=item_id).exists()):
-            if (User.objects.filter(username=username).exists()):
+            user = User.objects.get(username=username)
+            if (user is not None):
                 item = ItemList.objects.get(pk=item_id)
                 if item.remain >= 1:
-                    self.update_item(item_id)
-                    time = self.save_to_user(username, item_id)
-                    return Response({'messages':'購買成功','success':True, 'time': time},status=status.HTTP_200_OK)  ##TODO proper response
+                    buyer = UserProfile.objects.get(user=user)
+                    if (buyer.usable_points >= item.price):
+                        self.update_item(item_id)
+                        time = self.save_to_user(username, item_id)
+                        return Response({'messages':'購買成功','success':True, 'time': time},status=status.HTTP_200_OK)  ##TODO proper response
+                    else:
+                        return Response({'messages': '很抱歉！您的點數不足！', 'success': False})
                 else:
                     return Response({'messages':'此項目已售完','success':False})  # return Response(status=status.HTTP_409_CONFLICT) #TODO proper response
             else:
@@ -86,7 +91,12 @@ class QRCode(APIView):
             if ((time_delta.seconds >= 5) or logic):  # TODO QRcode cold down set here
                 QRcode_status_data.last_read = now
                 QRcode_status_data.save()
-                point_recieved = randint(10, 50)  # point range set here
+                QR = QRcodeList.objects.get(code_content=qrcode)
+                if (QR.is_poster):
+                    point_recieved = 5
+                else:
+                    point_recieved = randint(10, 30)
+
                 user = User.objects.get(username=username)
                 userprofile = UserProfile.objects.get(user=user)
                 userprofile.usable_points += point_recieved

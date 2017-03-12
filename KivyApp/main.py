@@ -40,19 +40,19 @@ class TutorialApp(App):
         #     # 'http://127.0.0.1:8000/accounts/login/',
         #     on_success=self.success, on_failure=self.fail,
         #     on_error=self.error, on_redirect=self.redirected)
-
-        params = urllib.parse.urlencode({'username': 'superuser', 'password':'test1234','realname':'郭郭','department':'物理二'})
-        headers = {'Content-type': 'application/x-www-form-urlencoded'}
-        req = UrlRequest('http://hnhn789.pythonanywhere.com/accounts/login/', on_success=self.success, on_failure=self.fail,
-                         req_body=params,
-                         req_headers=headers)
-
         #
-        # params = urllib.parse.urlencode({'username': 'hanson', 'password':'hnhn123456','realname':'郭郭','department':'物理二'})
+        # params = urllib.parse.urlencode({'username': 'superuse', 'password':'1234','realname':'郭郭','department':'物理二'})
         # headers = {'Content-type': 'application/x-www-form-urlencoded'}
-        # req = UrlRequest('http://127.0.0.1:8000/accounts/login/', on_success=self.success, on_failure=self.fail,
+        # req = UrlRequest('http://127.0.0.1:8000/accounts/signup/', on_success=self.success, on_failure=self.fail,
         #                  req_body=params,
         #                  req_headers=headers)
+
+        #
+        params = urllib.parse.urlencode({'username': 'hanson', 'points':100,'stories':'000','password':'hnhn123456','realname':'郭郭','department':'物理二'})
+        headers = {'Content-type': 'application/x-www-form-urlencoded'}
+        req = UrlRequest('http://127.0.0.1:8000/accounts/logout/', on_success=self.success, on_failure=self.fail,
+                         req_body=params,
+                         req_headers=headers)
 
 
 
@@ -62,7 +62,7 @@ class TutorialApp(App):
 
     def success(self, request, results):
         print("success")
-        print(results['boughtitems'] == [])
+        print(results)
 
     def redirected(self, reqest, results):
         print("redirect")

@@ -2,15 +2,12 @@ from django.contrib import auth  # 別忘了import auth
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
-from django.http import HttpResponse
 from django.shortcuts import render_to_response
-from  django.views.generic.base import View
 from email_confirm_la.models import EmailConfirmation
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from NewUser.models import BoughtItems
 from NewUser.serializers import BoughtItemsSerializer
-import json
 
 from accounts.models import UserProfile
 
@@ -70,10 +67,10 @@ class SignUpView(APIView):
 
         user = User.objects.create_user(username=username,password=password, first_name = department,last_name = realname)
 
-        EmailConfirmation.objects.verify_email_for_object(email, user)
-
         if user is not None and user.is_active:
-            return Response({"messages":'認證信已寄出！請確認！','success':True}, status=200)
+
+            EmailConfirmation.objects.verify_email_for_object(email, user)
+            return Response({"messages":'認證信已寄出！請至學校信箱確認！','success':True}, status=200)
         else:
             return Response({"messages": '註冊失敗，請重試', 'success': False}, status=200)
 
@@ -123,20 +120,25 @@ class LoginView(APIView):
         else:
             return Response({"messages": '使用者名稱或密碼有誤', 'success': False}, status=200)
 
-class LogoutView(View):
+class LogoutView(APIView):
     def post(self, request):
         username = request.POST.get('username', '')
         stories = request.POST.get('stories', '')
-        user = User.objects.get(username = username)
-        userprofile = UserProfile.objects.get(user = user)
-        userprofile.stories = stories
-        userprofile.save()
+        points = request.POST.get('points', '')
+        try:
+            user = User.objects.get(username = username)
+            userprofile = UserProfile.objects.get(user = user)
+            userprofile.stories = stories
+            userprofile.usable_points = points
+            userprofile.save()
+        except:
+            return Response({"messages": "登出失敗，請重試！", 'success': False}, status=200)
         try:
             del request.session['username']
         except:
             pass
         auth.logout(request)
-        return HttpResponse("登出成功！", status=200)
+        return Response({"messages": "登出成功！", 'success': True}, status=200)
 
 
 

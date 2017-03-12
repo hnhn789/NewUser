@@ -67,6 +67,30 @@ class ShopTests(TransactionTestCase):
         response3 = self.client.get('/QRcode/b04202048/Physics/')
         self.assertEqual(response3.status_code, 200)
 
+    def test_is_poster_or_not(self):
+        a = QRcodeList.objects.create(code_content='Physics',is_poster=True)
+        d = QRcodeList.objects.create(code_content='Night', is_poster=False)
+        b = UserProfile(user=self.user, usable_points=0)
+        b.save()
 
+        response = self.client.get('/QRcode/b04202048/Physics/')
+        self.assertEqual(response.status_code, 200)
+        c = UserProfile.objects.get(user = self.user)
+        self.assertEqual(c.usable_points, 5)
+
+        response = self.client.get('/QRcode/b04202048/Night/')
+        self.assertEqual(response.status_code, 200)
+        e = UserProfile.objects.get(user=self.user)
+        self.assertNotEqual(e.usable_points, 5)
+
+
+    def test_not_enough_money(self):
+        item = ItemList.objects.create(name="蛋糕", price=10, remain=2)
+
+        a = UserProfile(user=self.user, usable_points=5)
+        a.save()
+
+        response = self.client.get('/shop/b04202048/' + str(item.pk) + '/')
+        self.assertIn(str('您的點數不足').encode(), response.content)
 
 
