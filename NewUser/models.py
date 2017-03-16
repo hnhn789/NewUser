@@ -4,6 +4,10 @@ from django.db import models
 import datetime
 import pytz
 
+class AdministratorControll(models.Model):
+    group = models.IntegerField(default=0)
+    name = models.CharField(default='open_group',max_length=20)
+
 class ItemList(models.Model):
     name = models.CharField(max_length=100,blank=True)
     price = models.IntegerField(default=0)
@@ -33,6 +37,7 @@ class QRcodeStatus(models.Model):
 
 class QRcodeList(models.Model):
     code_content = models.SlugField(max_length=40, unique=True)
+    group = models.IntegerField(default=0)
     is_poster = models.BooleanField(default=False)
 
     def __str__(self):

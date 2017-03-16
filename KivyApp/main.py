@@ -31,7 +31,7 @@ class TutorialApp(App):
 
     def MyRequest(self):
         req = UrlRequest(
-            'http://127.0.0.1:8000/QRcode/superuse/PhysicsNight/',
+            'http://127.0.0.1:8000/QRcode/hanson/PhysicsNight/',
 
             on_success=self.success, on_failure=self.fail)
 

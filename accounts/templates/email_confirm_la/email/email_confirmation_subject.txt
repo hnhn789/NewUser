@@ -1,1 +1,1 @@
-{{ email_confirmation.email }}的信箱認證
+[EigenValue物理之夜] 信箱認證

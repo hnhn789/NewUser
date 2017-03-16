@@ -4,10 +4,11 @@ from django.contrib.auth.models import User
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 import pytz
 import datetime
-from NewUser.models import ItemList, BoughtItems, QRCodeRecord, QRcodeStatus, QRcodeList, BoughtRecord
+from NewUser.models import ItemList, BoughtItems, QRCodeRecord, QRcodeStatus, QRcodeList, BoughtRecord, AdministratorControll
 from accounts.models import UserProfile
 from NewUser.serializers import ItemListSerializer
 
@@ -74,7 +75,19 @@ class BuyItem(APIView):
 class QRCode(APIView):
 
     def get(self, request, username, qrcode):
-        if (QRcodeList.objects.filter(code_content=qrcode).exists()):
+        GroupObject = AdministratorControll.objects.get(name='open_group')
+        current_group = GroupObject.group
+        time_filter = QRCodeRecord.objects.filter(user__username=username).filter(code_content=qrcode)
+        if not time_filter:
+            times = time_filter.count()
+        else:
+            times=0
+
+        try:
+            qrcodeModel = QRcodeList.objects.get(code_content=qrcode)
+        except ObjectDoesNotExist:
+            return Response({'messages': 'QRcode不存在', 'success': False}, status=200)
+        if (qrcodeModel is not None and qrcodeModel.group == current_group):
             QRcode_status_data_list = self.got_correct_code(username, qrcode)
 
             if QRcode_status_data_list.filter(code=qrcode).exists():
@@ -88,14 +101,19 @@ class QRCode(APIView):
             old_time = QRcode_status_data.last_read
             now = datetime.datetime.now(pytz.utc)
             time_delta = now - old_time
-            if ((time_delta.seconds >= 5) or logic):  # TODO QRcode cold down set here
+            remain_hour = int(time_delta.seconds/3600)
+            remain_minutes = int((time_delta.seconds-remain_hour*3600)/60)
+            remain_seconds = int((time_delta.seconds-remain_hour*3600-remain_minutes*60))
+            time_message = str(remain_hour)+ '小時' + str(remain_minutes) + '分' + str(remain_seconds) + "秒"
+            wait_message = '此QRcode冷卻中，還不能使用...剩餘時間：'+time_message
+            if ((time_delta.seconds >= 4*60*60) or logic):  # TODO QRcode cold down set here
                 QRcode_status_data.last_read = now
                 QRcode_status_data.save()
                 QR = QRcodeList.objects.get(code_content=qrcode)
                 if (QR.is_poster):
                     point_recieved = 5
                 else:
-                    point_recieved = randint(10, 30)
+                    point_recieved = int(randint(20, 30)*0.7**times)
 
                 user = User.objects.get(username=username)
                 userprofile = UserProfile.objects.get(user=user)
@@ -105,9 +123,9 @@ class QRCode(APIView):
                 a.save()
                 return Response({'messages':'成功得到點數！','success':True,'point_received':str(point_recieved),'time':now}, status=200)  # TODO proper response
             else:
-                return Response({'messages':'此QRcode還不能使用','time':time_delta,'success':False},status=200)
+                return Response({'messages':wait_message,'time':time_delta,'success':False},status=200)
         else:
-            return Response({'messages':'QRcode不存在','success':False},status=200)  #TODO proper response
+            return Response({'messages':'此QRcode已無法使用','success':False},status=200)  #TODO proper response
 
     def got_correct_code(self, username, qrcode):
         user = User.objects.get(username=username)
