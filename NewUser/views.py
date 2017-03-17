@@ -107,7 +107,7 @@ class QRCode(APIView):
             remain_hour = int(time_delta.seconds/3600)
             remain_minutes = int((time_delta.seconds-remain_hour*3600)/60)
             remain_seconds = int((time_delta.seconds-remain_hour*3600-remain_minutes*60))
-            time_message = str(remain_hour)+ '小時' + str(remain_minutes) + '分' + str(remain_seconds) + "秒"
+            time_message = str(3-remain_hour)+ '小時' + str(59-remain_minutes) + '分' + str(59-remain_seconds) + "秒"
             wait_message = '此QRcode冷卻中，還不能使用...剩餘時間：'+time_message
             if ((time_delta.seconds >= 4*60*60) or logic):  # TODO QRcode cold down set here
                 QRcode_status_data.last_read = now
