@@ -216,7 +216,7 @@ class ReturnDataTest(TransactionTestCase):
         response = self.client.post("/accounts/login/",
                                     {"username": "b04202048", "password": "hnhn123456", })
         self.assertEqual(response.status_code, 200)
-        self.assertIn(str('000000000000 000000000000 00000000000').encode(), response.content)
+        self.assertIn(str('00000000000000000000000000000000000').encode(), response.content)
 
     def test_logout_save_data(self):
         user = User.objects.create_user(username='b04202048', password='hnhn123456', email="hnhn789@yahoo.com.tw")
