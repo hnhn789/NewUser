@@ -14,22 +14,64 @@ class ShopTests(TransactionTestCase):
         self.user2 = User.objects.create_user(username='b04202049', password='hnhn123456', email='hnh789@yahoo.com.tw')
         self.group_controll = AdministratorControll.objects.create(group=0)
 
+    def test_history_points(self):
+        a = QRcodeList.objects.create(code_content='Physics',is_poster=True)
+        b = UserProfile.objects.create(user = self.user)
+        response = self.client.get('/QRcode/b04202048/Physics/')
+        self.assertEqual(response.status_code, 200)
+
+        c = UserProfile.objects.get(user=self.user)
+        self.assertEqual(c.usable_points, 5)
+        self.assertEqual(c.history_points, 5)
+
+    def test_boughtItem_model_works_well(self):
+        item_yes = ItemList.objects.create(name="餅乾", price=10, remain=10)
+        a = UserProfile(user=self.user, usable_points=100, history_points=100)
+        a.save()
+
+        response = self.client.get('/shop/b04202048/' + str(item_yes.pk) + '/')
+        b = BoughtItems.objects.filter(user = self.user).count()
+        self.assertEqual(b,1)
+
+        response = self.client.get('/shop/b04202048/' + str(item_yes.pk) + '/')
+        c = BoughtItems.objects.filter(user=self.user).count()
+        self.assertEqual(c, 1)
+        c1 = BoughtItems.objects.get(user= self.user)
+        self.assertEqual(c1.item_quantity, 2)
+
+        d = BoughtItems.objects.get(user=self.user)
+        d.has_redeemed = True
+        d.save()
+
+        response = self.client.get('/shop/b04202048/' + str(item_yes.pk) + '/')
+
+        e = BoughtItems.objects.filter(user=self.user).count()
+        self.assertNotEqual(e, 1)
+
+        response = self.client.get('/shop/b04202048/' + str(item_yes.pk) + '/')
+        f = BoughtItems.objects.filter(user=self.user).filter(has_redeemed=False)
+        self.assertEqual(f[0].item_quantity, 2)
+
+
+
 
     def test_buy(self):
 
         item_no = ItemList.objects.create(name="蛋糕",price=10,remain=0)
         item_yes = ItemList.objects.create(name="餅乾",price=10,remain=10)
 
-        a = UserProfile(user=self.user,usable_points = 100)
+        a = UserProfile(user=self.user,usable_points = 100,history_points=100)
         a.save()
 
         self.assertEqual(a.user, self.user)
         self.assertEqual(a.usable_points,100)
+        self.assertEqual(a.history_points, 100)
 
         response = self.client.get('/shop/b04202048/'+str(item_yes.pk)+'/')
 
         b = UserProfile.objects.get(user=self.user)
         self.assertEqual(b.usable_points, 90)
+        self.assertEqual(b.history_points, 100)
 
         item_yes_final = ItemList.objects.get(name=item_yes.name)
 

@@ -97,8 +97,7 @@ class LoginView(APIView):
         points = ProfileUser.usable_points
         stories = ProfileUser.stories
 
-        Useritems = BoughtItems.objects.filter(user = user)
-        boughtitems = Useritems.filter(has_redeemed=False)
+        boughtitems = BoughtItems.objects.filter(user = user).filter(has_redeemed=False)
         serializer = BoughtItemsSerializer(boughtitems, many=True)
         return points, stories, serializer.data
 

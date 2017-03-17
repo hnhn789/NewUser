@@ -55,9 +55,9 @@ class BuyItem(APIView):
         user = User.objects.get(username=username)
         buyer = UserProfile.objects.get(user=user)
 
-        boughtitem = BoughtItems.objects.filter(item_name=item_id)
+        boughtitem = BoughtItems.objects.filter(item_name=item_id).filter(user=user).filter(has_redeemed=False)
 
-        if boughtitem.filter(user=user).exists():
+        if boughtitem.exists():
             bought_item_record = boughtitem.get(user=user)
         else:
             bought_item_record = BoughtItems(item_name=item_id, user=user)
@@ -123,12 +123,13 @@ class QRCode(APIView):
                 user = User.objects.get(username=username)
                 userprofile = UserProfile.objects.get(user=user)
                 userprofile.usable_points += point_recieved
+                userprofile.history_points += point_recieved
                 userprofile.save()
                 a = QRCodeRecord(code_content=qrcode, points_got=point_recieved, user=user)
                 a.save()
                 return Response({'messages':'成功得到點數！','success':True,'point_received':str(point_recieved),'time':now}, status=200)  # TODO proper response
             else:
-                return Response({'messages':wait_message,'time':time_delta,'success':False},status=200)
+                return Response({'messages':str(wait_message),'time':time_delta,'success':False},status=200)
         else:
             return Response({'messages':'此QRcode已無法使用','success':False},status=200)  #TODO proper response
 
