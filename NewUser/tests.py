@@ -61,18 +61,17 @@ class ShopTests(TransactionTestCase):
         response2 = self.client.get('/QRcode/b04202049/Physics/')
         self.assertEqual(response2.status_code, 200)
 
-    def test_qrcode_cd(self):
-        a = QRcodeList.objects.create(code_content='Physics')
-        b = UserProfile(user=self.user, usable_points=100)
-        b.save()
-
-        response = self.client.get('/QRcode/b04202048/Physicszzz/')
-        self.assertIn(str('不存在').encode(), response.content)
-
-        response = self.client.get('/QRcode/b04202048/Physics/')
-        self.assertEqual(response.status_code, 200)
-
-        print(response.content)
+    # def test_qrcode_cd(self):
+        # a = QRcodeList.objects.create(code_content='Physics')
+        # b = UserProfile(user=self.user, usable_points=100)
+        # b.save()
+        #
+        # response = self.client.get('/QRcode/b04202048/Physicszzz/')
+        # self.assertIn(str('不存在').encode(), response.content)
+        #
+        # response = self.client.get('/QRcode/b04202048/Physics/')
+        # self.assertEqual(response.status_code, 200)
+        #
         # sleep(3)
         #
         # response2 = self.client.get('/QRcode/b04202048/Physics/')
@@ -122,20 +121,20 @@ class ShopTests(TransactionTestCase):
         response = self.client.get('/QRcode/b04202048/Night/')
         self.assertIn(str('此QRcode已無法使用').encode(), response.content)
 
+    # =========== Remember To Set CD Time to Zero When Testing This ===============
+
     # def test_point_gets_smaller(self):
-    #     a = QRcodeList.objects.create(code_content='Physics', is_poster=True, group=0)
-    #     d = QRcodeList.objects.create(code_content='Night', is_poster=False, group=1)
+    #     a = QRcodeList.objects.create(code_content='Physics', is_poster=False, group=0)
     #     b = UserProfile(user=self.user, usable_points=0)
     #     b.save()
     #
     #     response = self.client.get('/QRcode/b04202048/Physics/')
     #     self.assertIn(str('成功').encode(), response.content)
+    #     print(response.content)
     #
     #     count = QRCodeRecord.objects.filter(user=self.user).count()
     #
     #     self.assertEqual(count,1)
-    #
-    #     sleep(6)
     #
     #     response2 = self.client.get('/QRcode/b04202048/Physics/')
     #     self.assertIn(str('成功').encode(), response2.content)
@@ -143,6 +142,20 @@ class ShopTests(TransactionTestCase):
     #     count2 = QRCodeRecord.objects.filter(user=self.user).filter(code_content="Physics").count()
     #
     #     self.assertEqual(count2, 2)
+    #
+    #     response2 = self.client.get('/QRcode/b04202048/Physics/')
+    #     self.assertIn(str('成功').encode(), response2.content)
+    #     response2 = self.client.get('/QRcode/b04202048/Physics/')
+    #     self.assertIn(str('成功').encode(), response2.content)
+    #     response2 = self.client.get('/QRcode/b04202048/Physics/')
+    #     self.assertIn(str('成功').encode(), response2.content)
+    #     response2 = self.client.get('/QRcode/b04202048/Physics/')
+    #     self.assertIn(str('成功').encode(), response2.content)
+    #     response3 = self.client.get('/QRcode/b04202048/Physics/')
+    #     self.assertIn(str('成功').encode(), response2.content)
+    #     times = QRCodeRecord.objects.filter(user=self.user).filter(code_content="Physics").count()
+    #     print(response3.content)
+
 
 
 

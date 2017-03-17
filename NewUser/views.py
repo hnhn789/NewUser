@@ -77,9 +77,13 @@ class QRCode(APIView):
     def get(self, request, username, qrcode):
         GroupObject = AdministratorControll.objects.get(name='open_group')
         current_group = GroupObject.group
-        time_filter = QRCodeRecord.objects.filter(user__username=username).filter(code_content=qrcode)
-        if not time_filter:
-            times = time_filter.count()
+        try:
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            return Response({'messages': '網路問題，請重新登入', 'success': False}, status=200)
+        time_filter = QRCodeRecord.objects.filter(user=user).filter(code_content=qrcode)
+        if time_filter is not None:
+            times = int(time_filter.count())
         else:
             times=0
 
@@ -94,7 +98,6 @@ class QRCode(APIView):
                 QRcode_status_data = QRcode_status_data_list.get(code=qrcode)
                 logic = 0
             else:
-                user = User.objects.get(username=username)
                 QRcode_status_data = QRcodeStatus(code=qrcode, user=user)
                 logic = 1
 
@@ -113,7 +116,9 @@ class QRCode(APIView):
                 if (QR.is_poster):
                     point_recieved = 5
                 else:
-                    point_recieved = int(randint(20, 30)*0.7**times)
+                    random = randint(20, 30)
+                    power = 0.7**int(times)
+                    point_recieved = int(random*power)
 
                 user = User.objects.get(username=username)
                 userprofile = UserProfile.objects.get(user=user)
