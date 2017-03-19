@@ -11,7 +11,7 @@ class UserPointsAdmin(admin.ModelAdmin):
 
 
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ["pk","name","price", "remain",'image']
+    list_display = ["pk","name","price", "remain","max_per_person",'image']
 
 class QRCodeAdmin(admin.ModelAdmin):
     list_display = ["pk", "code_content","group","is_poster"]

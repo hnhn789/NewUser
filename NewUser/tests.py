@@ -30,8 +30,9 @@ class ShopTests(TransactionTestCase):
         a.save()
 
         response = self.client.get('/shop/b04202048/' + str(item_yes.pk) + '/')
-        response = self.client.get('/shop/b04202048/' + str(item_yes.pk) + '/')
         self.assertIn(str('購買成功').encode(), response.content)
+        response1 = self.client.get('/shop/b04202048/' + str(item_yes.pk) + '/')
+        self.assertIn(str('購買成功').encode(), response1.content)
         b = BoughtItems.objects.get(user=self.user)
         self.assertEqual(b.item_quantity, 2)
 
