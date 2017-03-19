@@ -13,7 +13,7 @@ class ItemList(models.Model):
     price = models.IntegerField(default=0)
     remain = models.IntegerField(default=0)
     max_per_person = models.IntegerField(default=2)
-    image = models.CharField(max_length=200,default='https://firebasestorage.googleapis.com/v0/b/sibo-5e145.appspot.com/o/p_coin.png?alt=media&token=682579a3-23fa-4a96-a758-5bc07610a556')
+    image = models.CharField(max_length=200,default='http://i67.tinypic.com/30j30nt.pnggit')
 
     def __str__(self):
         return self.name
