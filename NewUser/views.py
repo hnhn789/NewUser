@@ -32,9 +32,13 @@ class BuyItem(APIView):
                 if item.remain >= 1:
                     buyer = UserProfile.objects.get(user=user)
                     if (buyer.usable_points >= item.price):
-                        self.update_item(item_id)
-                        time = self.save_to_user(username, item_id)
-                        return Response({'messages':'購買成功','success':True, 'time': time},status=status.HTTP_200_OK)  ##TODO proper response
+                        boughtitems = BoughtItems.objects.filter(user=user).filter(item_name=item.id).filter(has_redeemed=False)
+                        if(boughtitems.exists() and boughtitems[0].item_quantity > (item.max_per_person-1)):
+                            return Response({'messages': '很抱歉！您已超過此項目購買上限！請選購其他商品。', 'success': False})
+                        else:
+                            self.update_item(item_id)
+                            time = self.save_to_user(username, item_id)
+                            return Response({'messages':'購買成功！','success':True, 'time': time},status=status.HTTP_200_OK)  ##TODO proper response
                     else:
                         return Response({'messages': '很抱歉！您的點數不足！', 'success': False})
                 else:

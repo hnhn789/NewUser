@@ -24,6 +24,24 @@ class ShopTests(TransactionTestCase):
         self.assertEqual(c.usable_points, 5)
         self.assertEqual(c.history_points, 5)
 
+    def test_buy_more_than_maximun(self):
+        item_yes = ItemList.objects.create(name="餅乾", price=10, remain=10, max_per_person = 2)
+        a = UserProfile(user=self.user, usable_points=100, history_points=100)
+        a.save()
+
+        response = self.client.get('/shop/b04202048/' + str(item_yes.pk) + '/')
+        response = self.client.get('/shop/b04202048/' + str(item_yes.pk) + '/')
+        self.assertIn(str('購買成功').encode(), response.content)
+        b = BoughtItems.objects.get(user=self.user)
+        self.assertEqual(b.item_quantity, 2)
+
+        response2 = self.client.get('/shop/b04202048/' + str(item_yes.pk) + '/')
+        self.assertIn(str('很抱歉！您已超過此項目購買上限！請選購其他商品').encode(), response2.content)
+
+        response3 = self.client.get('/shop/b04202048/' + str(item_yes.pk) + '/')
+        self.assertIn(str('很抱歉！您已超過此項目購買上限！請選購其他商品').encode(), response3.content)
+
+
     def test_boughtItem_model_works_well(self):
         item_yes = ItemList.objects.create(name="餅乾", price=10, remain=10)
         a = UserProfile(user=self.user, usable_points=100, history_points=100)

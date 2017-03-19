@@ -30,10 +30,10 @@ class TutorialApp(App):
     #     print (request.text)
 
     def MyRequest(self):
-        req = UrlRequest(
-            'http://127.0.0.1:8000/QRcode/hanson/PhysicsNight/',
-
-            on_success=self.success, on_failure=self.fail)
+        # req = UrlRequest(
+        #     'http://127.0.0.1:8000/QRcode/hanson/PhysicsNight/',
+        #
+        #     on_success=self.success, on_failure=self.fail)
 
         # req = UrlRequest(
         #     'http://hnhn789.pythonanywhere.com/email_confirmation/resend/b04202048/',
@@ -41,11 +41,11 @@ class TutorialApp(App):
         #     on_success=self.success, on_failure=self.fail,
         #     on_error=self.error, on_redirect=self.redirected)
         #
-        # params = urllib.parse.urlencode({'username': 'superuse', 'password':'1234','realname':'郭郭','department':'物理二'})
-        # headers = {'Content-type': 'application/x-www-form-urlencoded'}
-        # req = UrlRequest('http://127.0.0.1:8000/accounts/signup/', on_success=self.success, on_failure=self.fail,
-        #                  req_body=params,
-        #                  req_headers=headers)
+        params = urllib.parse.urlencode({'username': 'b04202048', 'password':'1234','realname':'郭郭','department':'物理二'})
+        headers = {'Content-type': 'application/x-www-form-urlencoded'}
+        req = UrlRequest('http://hnhn789.pythonanywhere.com/accounts/signup/', on_success=self.success, on_failure=self.fail,
+                         req_body=params,
+                         req_headers=headers)
 
         #
         # params = urllib.parse.urlencode({'username': 'b04202008', 'points':100,'stories':'000000000000 000000000000 00000000000','password':'hnhn123456','realname':'郭郭','department':'物理二'})
