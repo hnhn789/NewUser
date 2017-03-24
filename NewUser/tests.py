@@ -21,8 +21,8 @@ class ShopTests(TransactionTestCase):
         self.assertEqual(response.status_code, 200)
 
         c = UserProfile.objects.get(user=self.user)
-        self.assertEqual(c.usable_points, 5)
-        self.assertEqual(c.history_points, 5)
+        self.assertEqual(c.usable_points, 105)
+        self.assertEqual(c.history_points, 105)
 
     def test_buy_more_than_maximun(self):
         item_yes = ItemList.objects.create(name="餅乾", price=10, remain=10, max_per_person = 2)
