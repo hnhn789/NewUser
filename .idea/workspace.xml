@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="3f2af06c-6f83-4c24-94e2-543b1db9013f" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/accounts/models.py" afterPath="$PROJECT_DIR$/accounts/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/accounts/views.py" afterPath="$PROJECT_DIR$/accounts/views.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -14,8 +14,8 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/NewUser$main.coverage" NAME="main Coverage Results" MODIFIED="1489752764692" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/KivyApp" />
-    <SUITE FILE_PATH="coverage/NewUser$Test__accounts_tests.coverage" NAME="Test: accounts.tests Coverage Results" MODIFIED="1489738547070" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/NewUser$Test__NewUser_tests.coverage" NAME="Test: NewUser.tests Coverage Results" MODIFIED="1489889854753" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/NewUser$Test__accounts_tests.coverage" NAME="Test: accounts.tests Coverage Results" MODIFIED="1490361022605" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/NewUser$Test__NewUser_tests.coverage" NAME="Test: NewUser.tests Coverage Results" MODIFIED="1490361028166" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
   <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
     <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
@@ -37,17 +37,17 @@
         <entry file="file://$PROJECT_DIR$/NewUser/urls.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="374">
-              <caret line="24" column="63" lean-forward="false" selection-start-line="24" selection-start-column="63" selection-end-line="24" selection-end-column="63" />
+              <caret line="24" column="54" lean-forward="false" selection-start-line="24" selection-start-column="11" selection-end-line="24" selection-end-column="54" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/accounts/models.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="153">
-              <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+              <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -56,21 +56,11 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/KivyApp/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+            <state relative-caret-position="493">
+              <caret line="38" column="68" lean-forward="false" selection-start-line="38" selection-start-column="15" selection-end-line="38" selection-end-column="68" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="email_confirmation_subject.txt" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/accounts/templates/email_confirm_la/email/email_confirmation_subject.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -98,8 +88,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/NewUser/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="527">
-              <caret line="42" column="65" lean-forward="false" selection-start-line="42" selection-start-column="65" selection-end-line="42" selection-end-column="65" />
+            <state relative-caret-position="-1156">
+              <caret line="19" column="29" lean-forward="true" selection-start-line="19" selection-start-column="29" selection-end-line="19" selection-end-column="29" />
               <folding>
                 <element signature="e#1#27#0" expanded="true" />
               </folding>
@@ -107,24 +97,32 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tests.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/NewUser/tests.py">
+      <file leaf-file-name="serializers.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/NewUser/serializers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="34" column="53" lean-forward="false" selection-start-line="34" selection-start-column="53" selection-end-line="34" selection-end-column="53" />
+            <state relative-caret-position="170">
+              <caret line="11" column="24" lean-forward="true" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="admin.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/NewUser/admin.py">
+      <file leaf-file-name="tests.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/NewUser/tests.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="26" column="55" lean-forward="false" selection-start-line="26" selection-start-column="55" selection-end-line="26" selection-end-column="55" />
-              <folding>
-                <element signature="e#1#33#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="221">
+              <caret line="20" column="21" lean-forward="false" selection-start-line="20" selection-start-column="21" selection-end-line="20" selection-end-column="21" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/accounts/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="126" column="7" lean-forward="false" selection-start-line="126" selection-start-column="7" selection-end-line="126" selection-end-column="7" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -194,16 +192,16 @@
         <option value="$PROJECT_DIR$/NewUser/serializers.py" />
         <option value="$PROJECT_DIR$/accounts/templates/email_confirm_la/email/email_confirmation_subject.txt" />
         <option value="$PROJECT_DIR$/accounts/templates/email_confirm_la/email_confirmation_success.html" />
-        <option value="$PROJECT_DIR$/accounts/views.py" />
         <option value="$PROJECT_DIR$/accounts/tests.py" />
         <option value="$PROJECT_DIR$/NewUser/settings.py" />
         <option value="$PROJECT_DIR$/KivyApp/main.py" />
         <option value="$PROJECT_DIR$/accounts/templates/email_confirm_la/email_confirmation_fail.html" />
         <option value="$PROJECT_DIR$/NewUser/views.py" />
-        <option value="$PROJECT_DIR$/NewUser/tests.py" />
         <option value="$PROJECT_DIR$/NewUser/admin.py" />
         <option value="$PROJECT_DIR$/NewUser/models.py" />
         <option value="$PROJECT_DIR$/accounts/models.py" />
+        <option value="$PROJECT_DIR$/NewUser/tests.py" />
+        <option value="$PROJECT_DIR$/accounts/views.py" />
       </list>
     </option>
   </component>
@@ -234,7 +232,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
@@ -306,6 +303,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -599,8 +597,8 @@
     <recent_temporary>
       <list size="3">
         <item index="0" class="java.lang.String" itemvalue="Django tests.Test: NewUser.tests" />
-        <item index="1" class="java.lang.String" itemvalue="Python.main" />
-        <item index="2" class="java.lang.String" itemvalue="Django tests.Test: accounts.tests" />
+        <item index="1" class="java.lang.String" itemvalue="Django tests.Test: accounts.tests" />
+        <item index="2" class="java.lang.String" itemvalue="Python.main" />
       </list>
     </recent_temporary>
   </component>
@@ -621,24 +619,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Test__NewUser_tests - 2017.03.19 at 10h 11m 26s.xml">
-      <configuration name="Test: NewUser.tests" configurationId="DjangoTestsConfigurationType" />
-    </history-entry>
-    <history-entry file="Test__NewUser_tests - 2017.03.19 at 10h 12m 00s.xml">
-      <configuration name="Test: NewUser.tests" configurationId="DjangoTestsConfigurationType" />
-    </history-entry>
-    <history-entry file="Test__NewUser_tests - 2017.03.19 at 10h 12m 15s.xml">
-      <configuration name="Test: NewUser.tests" configurationId="DjangoTestsConfigurationType" />
-    </history-entry>
-    <history-entry file="Test__NewUser_tests - 2017.03.19 at 10h 13m 19s.xml">
-      <configuration name="Test: NewUser.tests" configurationId="DjangoTestsConfigurationType" />
-    </history-entry>
-    <history-entry file="Test__NewUser_tests - 2017.03.19 at 10h 13m 41s.xml">
-      <configuration name="Test: NewUser.tests" configurationId="DjangoTestsConfigurationType" />
-    </history-entry>
-    <history-entry file="Test__NewUser_tests - 2017.03.19 at 10h 14m 01s.xml">
-      <configuration name="Test: NewUser.tests" configurationId="DjangoTestsConfigurationType" />
-    </history-entry>
     <history-entry file="Test__NewUser_tests - 2017.03.19 at 10h 14m 35s.xml">
       <configuration name="Test: NewUser.tests" configurationId="DjangoTestsConfigurationType" />
     </history-entry>
@@ -650,6 +630,24 @@
     </history-entry>
     <history-entry file="Test__NewUser_tests - 2017.03.19 at 10h 17m 36s.xml">
       <configuration name="Test: NewUser.tests" configurationId="DjangoTestsConfigurationType" />
+    </history-entry>
+    <history-entry file="Test__NewUser_tests - 2017.03.24 at 14h 14m 03s.xml">
+      <configuration name="Test: NewUser.tests" configurationId="DjangoTestsConfigurationType" />
+    </history-entry>
+    <history-entry file="Test__NewUser_tests - 2017.03.24 at 14h 14m 19s.xml">
+      <configuration name="Test: NewUser.tests" configurationId="DjangoTestsConfigurationType" />
+    </history-entry>
+    <history-entry file="Test__NewUser_tests - 2017.03.24 at 21h 10m 30s.xml">
+      <configuration name="Test: NewUser.tests" configurationId="DjangoTestsConfigurationType" />
+    </history-entry>
+    <history-entry file="Test__accounts_tests - 2017.03.24 at 14h 14m 25s.xml">
+      <configuration name="Test: accounts.tests" configurationId="DjangoTestsConfigurationType" />
+    </history-entry>
+    <history-entry file="Test__accounts_tests - 2017.03.24 at 21h 10m 19s.xml">
+      <configuration name="Test: accounts.tests" configurationId="DjangoTestsConfigurationType" />
+    </history-entry>
+    <history-entry file="Test__accounts_tests - 2017.03.24 at 21h 10m 25s.xml">
+      <configuration name="Test: accounts.tests" configurationId="DjangoTestsConfigurationType" />
     </history-entry>
   </component>
   <component name="TodoView">
@@ -663,18 +661,19 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1436" height="877" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18220946" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1886657" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299363" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2522293" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299363" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299363" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2522293" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.277707" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.277707" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -841,13 +840,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/NewUser/serializers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="12" column="54" lean-forward="false" selection-start-line="12" selection-start-column="54" selection-end-line="12" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/accounts/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -876,13 +868,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/accounts/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1479">
-          <caret line="98" column="0" lean-forward="false" selection-start-line="98" selection-start-column="0" selection-end-line="98" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/accounts/tests.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3570">
@@ -894,6 +879,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="629">
           <caret line="37" column="33" lean-forward="false" selection-start-line="37" selection-start-column="33" selection-end-line="37" selection-end-column="33" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -901,6 +887,28 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NewUser/admin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="26" column="55" lean-forward="false" selection-start-line="26" selection-start-column="55" selection-end-line="26" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NewUser/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="15" column="90" lean-forward="false" selection-start-line="15" selection-start-column="90" selection-end-line="15" selection-end-column="90" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/accounts/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -913,12 +921,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/NewUser/views.py">
+    <entry file="file://$PROJECT_DIR$/KivyApp/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="42" column="65" lean-forward="false" selection-start-line="42" selection-start-column="65" selection-end-line="42" selection-end-column="65" />
+        <state relative-caret-position="493">
+          <caret line="38" column="68" lean-forward="false" selection-start-line="38" selection-start-column="15" selection-end-line="38" selection-end-column="68" />
           <folding>
-            <element signature="e#1#27#0" expanded="true" />
+            <element signature="e#0#24#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -931,38 +939,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/KivyApp/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/NewUser/tests.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="34" column="53" lean-forward="false" selection-start-line="34" selection-start-column="53" selection-end-line="34" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/NewUser/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="26" column="55" lean-forward="false" selection-start-line="26" selection-start-column="55" selection-end-line="26" selection-end-column="55" />
-          <folding>
-            <element signature="e#1#33#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/NewUser/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="15" column="90" lean-forward="false" selection-start-line="15" selection-start-column="90" selection-end-line="15" selection-end-column="90" />
+        <state relative-caret-position="221">
+          <caret line="20" column="21" lean-forward="false" selection-start-line="20" selection-start-column="21" selection-end-line="20" selection-end-column="21" />
           <folding />
         </state>
       </provider>
@@ -970,15 +950,33 @@
     <entry file="file://$PROJECT_DIR$/NewUser/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
-          <caret line="24" column="63" lean-forward="false" selection-start-line="24" selection-start-column="63" selection-end-line="24" selection-end-column="63" />
+          <caret line="24" column="54" lean-forward="false" selection-start-line="24" selection-start-column="11" selection-end-line="24" selection-end-column="54" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/accounts/models.py">
+    <entry file="file://$PROJECT_DIR$/NewUser/serializers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="11" column="0" lean-forward="true" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+        <state relative-caret-position="170">
+          <caret line="11" column="24" lean-forward="true" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NewUser/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1156">
+          <caret line="19" column="29" lean-forward="true" selection-start-line="19" selection-start-column="29" selection-end-line="19" selection-end-column="29" />
+          <folding>
+            <element signature="e#1#27#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/accounts/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="126" column="7" lean-forward="false" selection-start-line="126" selection-start-column="7" selection-end-line="126" selection-end-column="7" />
           <folding />
         </state>
       </provider>

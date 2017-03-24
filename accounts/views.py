@@ -123,12 +123,12 @@ class LogoutView(APIView):
     def post(self, request):
         username = request.POST.get('username', '')
         stories = request.POST.get('stories', '')
-        points = request.POST.get('points', '')
+        # points = request.POST.get('points', '')
         try:
             user = User.objects.get(username = username)
             userprofile = UserProfile.objects.get(user = user)
             userprofile.stories = stories
-            userprofile.usable_points = points
+            # userprofile.usable_points = points
             userprofile.save()
         except:
             return Response({"messages": "登出失敗，請重試！", 'success': False}, status=200)
