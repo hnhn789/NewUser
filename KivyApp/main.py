@@ -41,7 +41,7 @@ class TutorialApp(App):
         #     on_success=self.success, on_failure=self.fail,
         #     on_error=self.error, on_redirect=self.redirected)
         #
-        params = urllib.parse.urlencode({'username': 'b04202048', 'password':'1234','realname':'郭郭','department':'物理二'})
+        params = urllib.parse.urlencode({'username': 'testing', 'password':'test1234','realname':'郭郭','department':'物理二'})
         headers = {'Content-type': 'application/x-www-form-urlencoded'}
         req = UrlRequest('http://hnhn789.pythonanywhere.com/accounts/signup/', on_success=self.success, on_failure=self.fail,
                          req_body=params,
