@@ -115,7 +115,7 @@ class LoginView(APIView):
 
             points, stories, boughtitems = self.data_points_story_shop(user)
 
-            return Response({'boughtitems': boughtitems,"messages": '登入成功', 'points':points,'stories':stories,'success': True,'username':username})
+            return Response({'success': True,'boughtitems': boughtitems,"messages": '登入成功', 'points':points,'stories':stories,'username':username})
         else:
             return Response({"messages": '使用者名稱或密碼有誤', 'success': False}, status=200)
 
