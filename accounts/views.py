@@ -60,19 +60,19 @@ class SignUpView(APIView):
         email = username +'@ntu.edu.tw'
 
         if username == '' or password == '' or realname == '' or department=='':
-            return Response({"messages": '註冊資料不完全', 'success': False}, status=200)
+            return Response({'success': False", messages": '註冊資料不完全'}, status=200)
 
         if User.objects.filter(username=username).exists():
-            return Response({"messages": '此信箱已被註冊過', 'success': False}, status=200)
+            return Response({'success': False, "messages": '此信箱已被註冊過'}, status=200)
 
         user = User.objects.create_user(username=username,password=password, first_name = department,last_name = realname)
 
         if user is not None and user.is_active:
 
             EmailConfirmation.objects.verify_email_for_object(email, user)
-            return Response({"messages":'認證信已寄出！請至學校信箱確認！','success':True}, status=200)
+            return Response({'success':True,"messages":'認證信已寄出！請至學校信箱確認！'}, status=200)
         else:
-            return Response({"messages": '註冊失敗，請重試', 'success': False}, status=200)
+            return Response({'success': False,"messages": '註冊失敗，請重試'}, status=200)
 
 
 class LoginView(APIView):
@@ -110,14 +110,14 @@ class LoginView(APIView):
         if user is not None and user.is_active:
             request.session['username'] = username
             if user.email == '':
-                return Response({"messages": '信箱尚未認證', 'success': False}, status=200)
+                return Response({'success': False,"messages": '信箱尚未認證'}, status=200)
             auth.login(request, user)
 
             points, stories, boughtitems = self.data_points_story_shop(user)
 
-            return Response({'success': True,'boughtitems': boughtitems,"messages": '登入成功', 'points':points,'stories':stories,'username':username})
+            return Response({'success': True,'stories':stories,'points':points,"messages": '登入成功','boughtitems': boughtitems, 'username':username})
         else:
-            return Response({"messages": '使用者名稱或密碼有誤', 'success': False}, status=200)
+            return Response({'success': False,"messages": '使用者名稱或密碼有誤'}, status=200)
 
 class LogoutView(APIView):
     def post(self, request):
@@ -137,7 +137,7 @@ class LogoutView(APIView):
         except:
             pass
         auth.logout(request)
-        return Response({"messages": "登出成功！", 'success': True}, status=200)
+        return Response({'success': True,"messages": "登出成功！"}, status=200)
 
 
 
