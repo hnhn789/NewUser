@@ -60,7 +60,7 @@ class SignUpView(APIView):
         email = username +'@ntu.edu.tw'
 
         if username == '' or password == '' or realname == '' or department=='':
-            return Response({'success': False", messages": '註冊資料不完全'}, status=200)
+            return Response({'success': False, "messages": '註冊資料不完全'}, status=200)
 
         if User.objects.filter(username=username).exists():
             return Response({'success': False, "messages": '此信箱已被註冊過'}, status=200)
