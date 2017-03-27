@@ -34,13 +34,13 @@ class BuyItem(APIView):
                     if (buyer.usable_points >= item.price):
                         boughtitems = BoughtItems.objects.filter(user=user).filter(item_name=item.id).filter(has_redeemed=False)
                         if(boughtitems.exists() and boughtitems[0].item_quantity > (item.max_per_person-1)):
-                            return Response({'messages': '很抱歉！您已超過此項目購買上限！請選購其他商品。', 'success': False})
+                            return Response({'success': False,'messages': '很抱歉！您已超過此項目購買上限！請選購其他商品。'})
                         else:
                             self.update_item(item_id)
                             time = self.save_to_user(username, item_id)
-                            return Response({'messages':'購買成功！','success':True, 'time': time},status=status.HTTP_200_OK)  ##TODO proper response
+                            return Response({'success':True,'time': time,'messages':'購買成功！'},status=status.HTTP_200_OK)  ##TODO proper response
                     else:
-                        return Response({'messages': '很抱歉！您的點數不足！', 'success': False})
+                        return Response({'success': False, 'messages': '很抱歉！您的點數不足！' })
                 else:
                     return Response({'messages':'此項目已售完','success':False})  # return Response(status=status.HTTP_409_CONFLICT) #TODO proper response
             else:
@@ -94,7 +94,7 @@ class QRCode(APIView):
         try:
             qrcodeModel = QRcodeList.objects.get(code_content=qrcode)
         except ObjectDoesNotExist:
-            return Response({'messages': 'QRcode不存在', 'success': False}, status=200)
+            return Response({ 'success': False,'messages': 'QRcode不存在'}, status=200)
         if (qrcodeModel is not None and qrcodeModel.group == current_group):
             QRcode_status_data_list = self.got_correct_code(username, qrcode)
 
@@ -131,11 +131,11 @@ class QRCode(APIView):
                 userprofile.save()
                 a = QRCodeRecord(code_content=qrcode, points_got=point_recieved, user=user)
                 a.save()
-                return Response({'messages':'成功得到點數！','success':True,'point_received':str(point_recieved),'time':now}, status=200)  # TODO proper response
+                return Response({'success':True,'point_received':str(point_recieved),'time':now,'messages':'成功得到點數！'}, status=200)  # TODO proper response
             else:
-                return Response({'messages':str(wait_message),'time':time_delta,'success':False},status=200)
+                return Response({'success':False,'time':time_delta,'messages':str(wait_message)},status=200)
         else:
-            return Response({'messages':'此QRcode已無法使用','success':False},status=200)  #TODO proper response
+            return Response({'success':False,'messages':'此QRcode已無法使用'},status=200)  #TODO proper response
 
     def got_correct_code(self, username, qrcode):
         user = User.objects.get(username=username)
