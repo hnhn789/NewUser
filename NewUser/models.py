@@ -18,16 +18,6 @@ class ItemList(models.Model):
     def __str__(self):
         return self.name
 
-class ItemListNew(models.Model):
-    name = models.CharField(max_length=100,blank=True)
-    price = models.IntegerField(default=0)
-    remain = models.IntegerField(default=0)
-    max_per_person = models.IntegerField(default=2)
-    image = models.CharField(max_length=200,default='http://i67.tinypic.com/30j30nt.pnggit')
-
-    def __str__(self):
-        return self.name
-
 class BoughtItems(models.Model):
     item_name = models.IntegerField(default=0)
     item_quantity = models.IntegerField(default=0)
