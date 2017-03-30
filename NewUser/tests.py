@@ -24,6 +24,26 @@ class ShopTests(TransactionTestCase):
         self.assertEqual(c.usable_points, 105)
         self.assertEqual(c.history_points, 105)
 
+    def test_buy_item11(self):
+        a = UserProfile(user=self.user, usable_points=100, history_points=100)
+        a.save()
+        
+        ItemList.objects.create(name="餅乾", price=10, remain=10, max_per_person = 2)
+        ItemList.objects.create(name="餅乾2", price=10, remain=10, max_per_person=2)
+        ItemList.objects.create(name="餅乾3", price=10, remain=10, max_per_person=2)
+        ItemList.objects.create(name="餅乾4", price=10, remain=10, max_per_person=2)
+        ItemList.objects.create(name="餅乾5", price=10, remain=10, max_per_person=2)
+        ItemList.objects.create(name="餅乾6", price=10, remain=10, max_per_person=2)
+        ItemList.objects.create(name="餅乾7", price=10, remain=10, max_per_person=2)
+        ItemList.objects.create(name="餅乾8", price=10, remain=10, max_per_person=2)
+        ItemList.objects.create(name="餅乾9", price=10, remain=10, max_per_person=2)
+        ItemList.objects.create(name="餅乾10", price=10, remain=10, max_per_person=2)
+        item_yes = ItemList.objects.create(name="餅乾11", price=10, remain=10, max_per_person=2)
+
+        response = self.client.get('/shop/b04202048/11/')
+        self.assertIn(str('更新').encode(), response.content)
+
+
     def test_buy_more_than_maximun(self):
         item_yes = ItemList.objects.create(name="餅乾", price=10, remain=10, max_per_person = 2)
         a = UserProfile(user=self.user, usable_points=100, history_points=100)

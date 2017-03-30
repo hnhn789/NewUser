@@ -25,7 +25,7 @@ class BuyUpdate(APIView):
 
 class BuyItem(APIView):
     def get(self, request, username, item_id):
-        if (item_id  == 11):
+        if (item_id  == '11'):
             return Response({'success': False, 'messages': '很抱歉，購買失敗!請至Google Play更新此應用程式！'})
         if (ItemList.objects.filter(pk=item_id).exists()):
             user = User.objects.get(username=username)
