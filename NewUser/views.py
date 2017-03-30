@@ -25,8 +25,6 @@ class BuyUpdate(APIView):
 
 class BuyItem(APIView):
     def get(self, request, username, item_id):
-        if (item_id == 11):
-            item_id = 12
         if (ItemList.objects.filter(pk=item_id).exists()):
             user = User.objects.get(username=username)
             if (user is not None):
