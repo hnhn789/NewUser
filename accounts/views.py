@@ -76,18 +76,6 @@ class SignUpView(APIView):
 
 
 class LoginView(APIView):
-    # def dump_data(self):
-    #     name_list = {}
-    #     price_list = {}
-    #     remain_list = {}
-    #
-    #     for i in range(1, ItemList.objects.count()+1):
-    #         name_list[i] = ItemList.objects.get(pk=i).name
-    #         price_list[i] = ItemList.objects.get(pk=i).price
-    #         remain_list[i] = ItemList.objects.get(pk=i).remain
-    #
-    #     data = {"name": name_list, "price": price_list, "remain": remain_list}
-    #     return data
 
     def data_points_story_shop(self, user):
         try:

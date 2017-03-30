@@ -17,7 +17,7 @@ class QRCodeAdmin(admin.ModelAdmin):
     list_display = ["pk", "code_content","group","is_poster"]
 
 class BoughtItemsAdmin(admin.ModelAdmin):
-    list_display = ["pk", "item_name", "item_quantity", "user","has_redeemed"]
+    list_display = ["pk", "user", "item_name", "item_quantity", "has_redeemed"]
     list_editable = ('has_redeemed',)
 
 class BoughtRecordAdmin(admin.ModelAdmin):
